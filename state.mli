@@ -1,12 +1,12 @@
 open Entities
 
-(*Represents the position in coordinates of the model*)
+(*Represents the position in coordinates of the player*)
 type position
 
-(*Velocity*)
+(*Represents the player's velocity*)
 type vel
 
-(*Acceleration*)
+(*Represents the player's acceleration*)
 type acc
 
 (*[level] is the level that the state is currently in*)

@@ -1,11 +1,4 @@
-(*Represents the position in coordinates of the model*)
-type position
-
-(*Velocity*)
-type vel
-
-(*Acceleration*)
-type acc
+open State
 
 val gravity : float
 

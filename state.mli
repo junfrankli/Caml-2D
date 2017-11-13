@@ -12,4 +12,6 @@ type acc
 (*[level] is the level that the state is currently in*)
 val level : int
 
+(*[pos_list] is the association list consisting of each
+  entity in the current level and their position*)
 val pos_list : (entity * position) list

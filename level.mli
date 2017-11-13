@@ -10,4 +10,7 @@ val start_pos : position
 (*[exit] is the position the player needs to be in to continue to the next level.*)
 val exit : position
 
+(*[holes] is the list of positions of spots in the level map
+  where, if the player were collide with any of those positions,
+  the game would end.*)
 val holes : position list

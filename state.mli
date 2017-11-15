@@ -9,6 +9,12 @@ type vel
 (*Represents the player's acceleration*)
 type acc
 
+(*[num_jumps] is the number of jumps the player has left.
+  The player has double-jump capabilities so the initial
+  value is 2 and should reset to 2 when the player entity
+  contacts a ground entity.*)
+val num_jumps : int
+
 (*[level] is the level that the state is currently in*)
 val level : int
 

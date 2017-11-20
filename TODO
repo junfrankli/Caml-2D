@@ -1,0 +1,4 @@
+Speed Cap
+Moving Platforms -> You move with the platform, but upon leaving, you do not retain velocity of platform
+Bosses -> keep track in state
+Projectiles

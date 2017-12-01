@@ -6,11 +6,11 @@ type entity
 (*[is_obst] is true if the entity is an obstacle and false otherwise.
   An obstacle is any entity that will cause a game over if the player entity
   were to collide with it.*)
-val is_obst : bool
+val is_obst : entity -> bool
 
 (*[is_ground] is true if the entity is a groudn object and false
   otherwise.*)
-val is_ground : bool
+val is_ground : entity -> bool
 
 (*[pos] is the position of the entity*)
 val pos : position

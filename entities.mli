@@ -8,10 +8,6 @@ type entity
   were to collide with it.*)
 val is_obst : bool
 
-(*[is_ground] is true if the entity is a groudn object and false
-  otherwise.*)
-val is_ground : bool
-
 (*[pos] is the position of the entity*)
 val pos : position
 

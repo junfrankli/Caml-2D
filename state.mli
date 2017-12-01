@@ -4,10 +4,10 @@ open Entities
 type position
 
 (*Represents the player's velocity*)
-type vel
+val vel : float
 
 (*Represents the player's acceleration*)
-type acc
+val acc : float
 
 (*[num_jumps] is the number of jumps the player has left.
   The player has double-jump capabilities so the initial

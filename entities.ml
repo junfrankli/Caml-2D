@@ -7,10 +7,17 @@ type obstacles =
   | Spikes of movement
   | Foe
 
-type entity =
-  | Obstacle of obstacles
-  | Ground
-  | Being
+type obj =
+| Obstacle of obstacles
+| Ground
+| Being
+
+type entity = {
+  etype : obj;
+  pos   : position;
+  evel  : vel;
+  eacc  : acc
+}
 
 let is_obst e =
   match e with

@@ -12,15 +12,6 @@ val is_obst : entity -> bool
   otherwise.*)
 val is_ground : entity -> bool
 
-(*[pos] is the position of the entity*)
-val pos : position
-
-(*[evel] is the velocity of the entity*)
-val evel : vel
-
-(*[eacc] is the acceleration of the entity*)
-val eacc : acc
-
 (*Pair of positions where the first is the bottom left corner of the hitbox
   and the second is the top right corner.*)
 type hitbox = position * position

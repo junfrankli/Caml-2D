@@ -19,6 +19,8 @@ type entity = {
   eacc  : acc
 }
 
+type hitbox = position * position
+
 let is_obst e =
   match e with
   | Obstacle o -> true

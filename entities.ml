@@ -20,8 +20,6 @@ type obj = {
   eacc  : acc
 }
 
-let boundingbox = {topleft = (0,0); botright = (0,0)}
-
 let is_obst e =
   match e with
   | Obstacle o -> true

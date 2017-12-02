@@ -4,9 +4,13 @@ type input =
   | Jump
   | Shoot
 
+(*Most likely unnecessary because input will be checked during event handling*)
 let check_input i =
   match i with
-  | Left, Right, Jump, Shoot -> true
+  | Left  -> true
+  | Right -> true
+  | Jump  -> true
+  | Shoot -> true
   | _ -> false
 
 let parse c : input =

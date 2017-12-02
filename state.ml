@@ -6,10 +6,11 @@ type position = int * int
 (* keeps track of which keys are pressed down
  * makes it easier to do physics *)
 type pressed = {
-  w_up : bool;
-  a_left : bool;
-  d_right : bool;
-  space_jump : bool}
+  w_up       : bool;
+  a_left     : bool;
+  d_right    : bool;
+  space_jump : bool
+}
 
 let vel = 0.0
 

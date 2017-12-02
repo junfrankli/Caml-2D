@@ -4,6 +4,6 @@ type input
   false otherwise.*)
 val check_input : input -> bool
 
-(*[parse s] takes string [s] and returns the input corresponding to the 
+(*[parse c] takes char [c] and returns the input corresponding to the
   input string*)
-val parse : string -> input
+val parse : char -> input

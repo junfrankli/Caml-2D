@@ -7,19 +7,20 @@ type obstacles =
   | Spikes of movement
   | Foe
 
-type obj =
+type ent =
 | Obstacle of obstacles
 | Ground
 | Being
 
-type entity = {
-  etype : obj;
+type obj = {
+  etype : ent;
+  size  : int * int;
   pos   : position;
   evel  : vel;
   eacc  : acc
 }
 
-type hitbox = position * position
+let boundingbox = {topleft = (0,0); botright = (0,0)}
 
 let is_obst e =
   match e with

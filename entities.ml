@@ -15,12 +15,13 @@ type ent =
 type obj = {
   etype : ent;
   size  : int * int;
-  move  : movement
+  move  : movement;
+  switch: pos list;
 }
 
 type aabb = {
-  center : float*float;
-  width_rad : float;
+  center     : float * float;
+  width_rad  : float;
   height_rad : float
 }
 

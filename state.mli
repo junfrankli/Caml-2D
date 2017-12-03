@@ -1,18 +1,16 @@
 open Entities
 open Command
 
+type state
+
 (*Represents the position in coordinates of the player*)
 type position
 
 (*Represents the player's velocity*)
-val vel : float
+val vel : state -> float
 
 (*Represents the player's acceleration*)
-val acc : float
-
-(*[detect_hit h1,h2] return true if there exists an overlap of coordinates
-  between hitboxes [h1] and [h2] and false otherwise.*)
-val detect_hit : hitbox * (hitbox list) -> bool * entity
+val acc : state -> float
 
 (*[num_jumps] is the number of jumps the player has left.
   The player has double-jump capabilities so the initial
@@ -26,7 +24,10 @@ val update_jumps : Command.input  -> int ref -> int
 val has_jump : bool
 
 (*[level] is the level that the state is currently in*)
-val level : int
+val level : state -> int
+
+(*[completed] is the list of levels that have been completed*)
+val completed : state -> int list
 
 (*[pos_list] is the association list consisting of each
   entity in the current level and their position*)

@@ -12,11 +12,13 @@ type pressed = {
   space_jump : bool
 }
 
-let vel = 0.0
+type state = {
+  pressed_keys : pressed;
+}
 
-let acc = 0.0
+let vel s = 0.0
 
-let detect_hit x = failwith "Unimplemented"
+let acc s = 0.0
 
 let num_jumps = ref 2
 
@@ -29,13 +31,11 @@ let update_jumps i n =
 
 let has_jump = if !num_jumps > 0 then true else false
 
-let level = 0
+let level s = 0
+
+let completed s = []
 
 let pos_list = []
-
-type state = {
-  pressed_keys : pressed;
-}
 
 let init_state ():state = {
   pressed_keys = {w_up = false;a_left = false;d_right = false;space_jump = false};

@@ -11,7 +11,7 @@ let check_input i =
   | Right -> true
   | Jump  -> true
   | Shoot -> true
-  | _ -> false
+  | _     -> false
 
 let parse c : input =
   match c with
@@ -19,4 +19,4 @@ let parse c : input =
   | 'a' -> Left
   | ' ' -> Shoot
   | 'd' -> Right
-  | _ -> failwith "invalid input"
+  | _   -> failwith "invalid input"

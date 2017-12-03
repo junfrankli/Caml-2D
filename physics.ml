@@ -34,7 +34,7 @@ let update_vel s =
   if s.in_air then
     m.v.xvel <- m.v.xvel /. 2.;
     m.v.xvel <- m.v.yvel /. 2.;
-  if not s.inair then
+  if not s.in_air then
   m.v.xvel <- m.a.xacc*.m.targetVelocity.xvel
               +. (1.0 -. m.a.xacc)*.m.v.xvel;
   m.v.yvel <- m.a.yacc*.m.targetVelocity.yvel

@@ -8,9 +8,10 @@ type obstacles =
   | Foe
 
 type ent =
-| Obstacle of obstacles
-| Ground
-| Being
+  | Obstacle of obstacles
+  | Ground
+  | Wall
+  | Being
 
 type obj = {
   etype : ent;
@@ -24,6 +25,13 @@ type aabb = {
   width_rad  : float;
   height_rad : float
 }
+
+type col_dir =
+  | West
+  | East
+  | North
+  | South
+  | None
 
 (*[get_aabb ob] takes an object [ob] and returns an axis-aligned bouding box.*)
 let get_aabb (ob : obj) =
@@ -57,3 +65,8 @@ let is_ground e =
   match e with
   | Ground -> true
   | _      -> false
+
+let is_wall e =
+  match e with
+  | Wall -> true
+  | _    -> false

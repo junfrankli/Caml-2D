@@ -16,6 +16,7 @@ type state = {
   pressed_keys : pressed;
   player : obj;
   mutable num_jumps : int;
+  in_air : bool;
   level : int;
   completed : int list
 }

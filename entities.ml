@@ -26,13 +26,6 @@ type aabb = {
   height_rad : float
 }
 
-type col_dir =
-  | West
-  | East
-  | North
-  | South
-  | None
-
 (*[get_aabb ob] takes an object [ob] and returns an axis-aligned bouding box.*)
 let get_aabb (ob : obj) =
   let pos_x   = ob.move.loc.x in
@@ -54,7 +47,6 @@ let aabb_collision ob1 ob2 =
   else let dy = (snd box1.center) -. (snd box2.center) in
     let py = (box1.height_rad +. box2.height_rad -. (abs_float dy)) in
     if py <= 0.0 then false else true
-
 
 let is_obst e =
   match e with

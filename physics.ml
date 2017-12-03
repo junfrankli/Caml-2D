@@ -1,3 +1,5 @@
+open State
+
 type pos = {
   mutable x : float;
   mutable y : float;
@@ -27,14 +29,19 @@ type movement = {
   mutable jump : int
 }
 
+let update_vel s =
+  let m = s.player.move in
+  if s.in_air then
+    m.v.xvel <- m.v.xvel /. 2.;
+    m.v.xvel <- m.v.yvel /. 2.;
+  if not s.inair then
+  m.v.xvel <- m.a.xacc*.m.targetVelocity.xvel
+              +. (1.0 -. m.a.xacc)*.m.v.xvel;
+  m.v.yvel <- m.a.yacc*.m.targetVelocity.yvel
+              +. (1.0 -. m.a.yacc)*.m.v.yvel
 
-let update_vel movement =
-  movement.v.xvel <- movement.a.xacc*.movement.targetVelocity.xvel
-                     +. (1.0 -. movement.a.xacc)*.movement.v.xvel;
-  movement.v.yvel <- movement.a.yacc*.movement.targetVelocity.yvel
-                     +. (1.0 -. movement.a.yacc)*.movement.v.yvel
 
-
-let update_move movement =
-movement.loc.x <- movement.loc.x +. movement.v.xvel;
-movement.loc.y <- movement.loc.y +. movement.v.yvel;
+let update_move s =
+  let m = s.player.move in
+  m.loc.x <- m.loc.x +. m.v.xvel;
+  m.loc.y <- m.loc.y +. m.v.yvel;

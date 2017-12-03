@@ -14,13 +14,15 @@ type pressed = {
 
 type state = {
   pressed_keys : pressed;
+  player : obj;
+  mutable num_jumps : int;
+  level : int;
+  completed : int list
 }
 
-let vel s = 0.0
+let vel s = s.player.move.v
 
-let acc s = 0.0
-
-let num_jumps = ref 2
+let acc s = s.player.move.a
 
 let update_jumps i n =
   if (!n) = 0 then 0
@@ -29,11 +31,7 @@ let update_jumps i n =
     | Jump -> (!n) - 1
     | _    -> !n
 
-let has_jump = if !num_jumps > 0 then true else false
-
-let level s = 0
-
-let completed s = []
+let has_jump s = if !(s.num_jumps) > 0 then true else false
 
 let pos_list = []
 

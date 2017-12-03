@@ -21,13 +21,7 @@ val num_jumps : int
 val update_jumps : Command.input  -> int ref -> int
 
 (*[has_jump] is true if the player can jump at least one more time*)
-val has_jump : bool
-
-(*[level] is the level that the state is currently in*)
-val level : state -> int
-
-(*[completed] is the list of levels that have been completed*)
-val completed : state -> int list
+val has_jump : state -> bool
 
 (*[pos_list] is the association list consisting of each
   entity in the current level and their position*)

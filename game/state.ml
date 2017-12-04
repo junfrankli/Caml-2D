@@ -52,8 +52,8 @@ let init_state () : state = {
 
 let update_state (st:state) (i:input) : state =
   match i with
-  | Left  -> true
-  | Right -> true
-  | Jump  -> true
-  | Shoot -> true
-  | _     -> false
+  | Left  -> st
+  | Right -> st
+  | Jump  -> st
+  | Shoot -> st
+  | _     -> st

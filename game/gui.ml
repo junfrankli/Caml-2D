@@ -1,4 +1,5 @@
 open Graphics
+open State
 open GMain
 open GdkKeysyms
 
@@ -86,10 +87,16 @@ let locked_img14 k = GMisc.image ~packing:k
 let locked_img15 k = GMisc.image ~packing:k
     ~file:"../images/levels/locked/bg15.png" ()
 
+let input = ref 0
+
 (**)
 let handle_key_press s =
   let key = GdkEvent.Key.keyval s in
   match key with
+  | 97  -> input := key; exit 0; true     (* A key *)
+  | 119 -> input := key; exit 0; true     (* W key *)
+  | 100 -> input := key; exit 0; true     (* D key *)
+  | 32  -> input := key; exit 0; true     (* Spacebar *)
   | 65362 (*up key*) -> exit 0; true
   | _ -> (); true
 
@@ -751,6 +758,8 @@ let main l () =
   window#connect#destroy ~callback:Main.quit;
   let vbox = GPack.vbox ~packing:window#add () in
   menu l window vbox ()
+
+let init = State.init_state 15
 
 (**)
 let () = main 15 ()

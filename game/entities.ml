@@ -1,7 +1,6 @@
-open Physics
+open State
 
-(*Should be Physics.movement*)
-type movement = Physics.movement
+type movement = State.movement
 
 type obstacles =
   | Spikes of movement

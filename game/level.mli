@@ -1,4 +1,3 @@
-open Entities
 open State
 
 (*[objects] is the list of all entities on the current level.*)

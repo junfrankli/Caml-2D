@@ -49,3 +49,11 @@ let init_state () : state = {
   level     = 0;
   completed = [];
 }
+
+let update_state (st:state) (i:input) : state =
+  match i with
+  | Left  -> true
+  | Right -> true
+  | Jump  -> true
+  | Shoot -> true
+  | _     -> false

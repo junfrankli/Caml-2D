@@ -60,7 +60,7 @@ let init_state (l:level) : state = {
 let process_collisions (st:state) (pl:obj) (col:obj)=
   match pl.etype, col.etype with
   | Being, Obstacle _ -> {st with game_over = true}
-  | Being, _ -> failwith "unimplemented"
+  | Being, _ -> failwith "Frank will do collision detection"
 
 (*check_collisions iterates through list of objects with possible collisons*)
 let rec check_collisions (acc:obj list) (st:state): state =

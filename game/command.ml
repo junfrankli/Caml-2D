@@ -11,11 +11,12 @@ let check_input i =
   | Right -> true
   | Jump  -> true
   | Shoot -> true
+  | _     -> false
 
-let parse c =
+let parse c : input =
   match c with
-  | 119 -> Jump
-  | 97 -> Left
-  | 32 -> Shoot
-  | 100 -> Right
+  | 'w' -> Jump
+  | 'a' -> Left
+  | ' ' -> Shoot
+  | 'd' -> Right
   | _   -> failwith "invalid input"

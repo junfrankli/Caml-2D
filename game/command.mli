@@ -6,4 +6,4 @@ val check_input : input -> bool
 
 (*[parse c] takes char [c] and returns the input corresponding to the
   input string*)
-val parse : int -> input
+val parse : char -> input

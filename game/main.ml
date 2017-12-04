@@ -3,10 +3,8 @@ open Command
 
 let game_over = false
 
-let initial = init_state ()
-
 let rec main () =
-  run initial
+  run (init_state ())
 
 and run st =
   if game_over then ()
@@ -15,5 +13,5 @@ and run st =
     if (not e.Graphics.keypressed) then run st
     else
       let input = parse e.Graphics.key in
-      let st' = update_st input in
+      let st' = update_st st input in
       run st'

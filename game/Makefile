@@ -1,5 +1,5 @@
 run:
-	ocamlfind ocamlc -g -package lablgtk2 graphics.cma -linkpkg gui.ml -o gui
+	ocamlbuild -use-ocamlfind -pkgs lablgtk2,graphics,camlimages
 
 clean:
 	ocamlbuild -clean

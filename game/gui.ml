@@ -95,8 +95,13 @@ let handle_key_press s =
 
 (**)
 let rec level n l window vbox () =
-  window#remove vbox#coerce;
-  let vbox = GPack.vbox ~packing:window#add () in
+
+
+  Graphics.open_graph " 400x400";
+  let img = Graphics.create_image 50 50 in
+  Graphics.draw_image img 0 0;
+  
+  (*let vbox = GPack.vbox ~packing:window#add () in
   (* Menu bar *)
   let hbox = GPack.hbox ~width:999 ~height:50 ~packing:vbox#add () in
   let quit = GBin.event_box ~width:333 ~packing:hbox#add () in
@@ -111,7 +116,7 @@ let rec level n l window vbox () =
   ignore (window#event#connect#key_press ~callback:((handle_key_press)));
   (* Display the windows and enter Gtk+ main loop *)
   window#show ();
-  Main.main ()
+    Main.main ()*)
 
 (**)
 and menu l window vbox () =

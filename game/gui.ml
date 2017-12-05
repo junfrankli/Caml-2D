@@ -87,25 +87,19 @@ let locked_img14 k = GMisc.image ~packing:k
 let locked_img15 k = GMisc.image ~packing:k
     ~file:"../images/levels/locked/bg15.png" ()
 
-let input = ref 0
-
-let dostuff st =
-  exit 0
-
-(**)
-let handle_key_press (st:state) s =
-  let key = GdkEvent.Key.keyval s in
-  match key with
-  | 97  -> let st' = State.update_key st 97  in dostuff st'; true     (* A key *)
-  | 119 -> let st' = State.update_key st 119 in dostuff st'; true     (* W key *)
-  | 100 -> let st' = State.update_key st 100 in dostuff st'; true     (* D key *)
-  | 32  -> let st' = State.update_key st 32  in dostuff st'; true     (* Spacebar *)
-  | 65362 (*up key*) -> exit 0; true
-  | _ -> (); true
-
 (**)
 let rec level n l st window vbox () =
   window#remove vbox#coerce;
+  let dostuff l st window vbox = menu (l+1) st window vbox () in
+  let handle_key_press l (st:state) window vbox s =
+    let key = GdkEvent.Key.keyval s in
+    match key with
+    | 97  -> let st' = State.update_key st 97  in dostuff l st' window vbox; true     (* A key *)
+    | 119 -> let st' = State.update_key st 119 in dostuff l st' window vbox; true     (* W key *)
+    | 100 -> let st' = State.update_key st 100 in dostuff l st' window vbox; true     (* D key *)
+    | 32  -> let st' = State.update_key st 32  in dostuff l st' window vbox; true     (* Spacebar *)
+    | 65362 (*up key*) -> exit 0; true
+    | _ -> (); true in
   let vbox = GPack.vbox ~packing:window#add () in
   (* Menu bar *)
   let hbox = GPack.hbox ~width:999 ~height:50 ~packing:vbox#add () in
@@ -118,7 +112,7 @@ let rec level n l st window vbox () =
   (* filler space *)
   let filler = GPack.vbox ~height:700 ~packing:vbox#add () in
   (* Event Box: test key press *)
-  ignore (window#event#connect#key_press ~callback:((handle_key_press st)));
+  ignore (window#event#connect#key_press ~callback:((handle_key_press l st window vbox)));
   (* Display the windows and enter Gtk+ main loop *)
   window#show ();
   Main.main ()
@@ -765,4 +759,4 @@ let main l st () =
 let init = State.init_state 15
 
 (**)
-let () = main 15 init ()
+let () = main 4 init ()

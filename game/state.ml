@@ -48,16 +48,6 @@ type obj = {
   switch: pos list;
 }
 
-
-(* keeps track of which keys are pressed down
- * makes it easier to do physics *)
-type pressed = {
-  w_up       : bool;
-  a_left     : bool;
-  d_right    : bool;
-  space_jump : bool
-}
-
 type level = {
   obj_list : obj list;
   start_pos : pos;
@@ -66,7 +56,7 @@ type level = {
 }
 
 type state = {
-  pressed_keys : pressed;
+  input  : int;
   player : obj;
   in_air : bool;
   level  : int;
@@ -162,7 +152,7 @@ let has_jump s = if s.player.move.jump > 0 then true else false
 let pos_list = []
 
 let init_state l = {
-  pressed_keys = {w_up = false;a_left = false;d_right = false;space_jump = false};
+  input     = 0;
   player    = {etype = Being; size = (0.,0.);
                move = {
                  loc = {x = 0.; y=0.};
@@ -190,6 +180,9 @@ let rec check_collisions (acc:obj list) (st:state): state =
   match acc with
   | [] -> st
   | h::t -> process_collisions st st.player h |> check_collisions t
+
+let update_key st k =
+  {st with input = k}
 
 let update_state (st:state) (i:input) : state =
   match i with

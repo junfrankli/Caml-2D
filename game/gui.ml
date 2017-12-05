@@ -89,19 +89,22 @@ let locked_img15 k = GMisc.image ~packing:k
 
 let input = ref 0
 
+let dostuff st =
+  exit 0
+
 (**)
-let handle_key_press s =
+let handle_key_press (st:state) s =
   let key = GdkEvent.Key.keyval s in
   match key with
-  | 97  -> input := key; exit 0; true     (* A key *)
-  | 119 -> input := key; exit 0; true     (* W key *)
-  | 100 -> input := key; exit 0; true     (* D key *)
-  | 32  -> input := key; exit 0; true     (* Spacebar *)
+  | 97  -> let st' = State.update_key st 97  in dostuff st'; true     (* A key *)
+  | 119 -> let st' = State.update_key st 119 in dostuff st'; true     (* W key *)
+  | 100 -> let st' = State.update_key st 100 in dostuff st'; true     (* D key *)
+  | 32  -> let st' = State.update_key st 32  in dostuff st'; true     (* Spacebar *)
   | 65362 (*up key*) -> exit 0; true
   | _ -> (); true
 
 (**)
-let rec level n l window vbox () =
+let rec level n l st window vbox () =
   window#remove vbox#coerce;
   let vbox = GPack.vbox ~packing:window#add () in
   (* Menu bar *)
@@ -111,17 +114,17 @@ let rec level n l window vbox () =
     ignore (quit#event#connect#button_press ~callback:(fun x -> exit 0; true));
   let back = GBin.event_box ~width:666 ~packing:hbox#add () in
     lmenu_img (back#add);
-    ignore (back#event#connect#button_press ~callback:(fun x -> menu l window vbox (); true));
+    ignore (back#event#connect#button_press ~callback:(fun x -> menu l st window vbox (); true));
   (* filler space *)
   let filler = GPack.vbox ~height:700 ~packing:vbox#add () in
   (* Event Box: test key press *)
-  ignore (window#event#connect#key_press ~callback:((handle_key_press)));
+  ignore (window#event#connect#key_press ~callback:((handle_key_press st)));
   (* Display the windows and enter Gtk+ main loop *)
   window#show ();
   Main.main ()
 
 (**)
-and menu l window vbox () =
+and menu l st window vbox () =
   (* Reset Window *)
   window#remove vbox#coerce;
   let vbox = GPack.vbox ~packing:window#add () in
@@ -134,632 +137,632 @@ and menu l window vbox () =
   let title = title_img (vboxt#add) in
   (* Menu *)
   let vboxl = GPack.vbox ~height:430 ~packing:vbox#add () in
-  match l with
-  | 1 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    locked_img2 (hbox1#add);
-    locked_img3 (hbox1#add);
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide2 (hbox2#add);
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide3 (hbox3#add);
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide4 (hbox4#add);
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide5 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 2 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    locked_img3 (hbox1#add);
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide2 (hbox2#add);
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide3 (hbox3#add);
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide4 (hbox4#add);
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide5 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 3 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide2 (hbox2#add);
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide3 (hbox3#add);
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide4 (hbox4#add);
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide5 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 4 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img4 (button4#add);
-      ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    locked_img5 (hbox2#add);
-    locked_img6 (hbox2#add);
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide3 (hbox3#add);
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide4 (hbox4#add);
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide5 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 5 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img4 (button4#add);
-      ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img5 (button5#add);
-      ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    locked_img6 (hbox2#add);
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide3 (hbox3#add);
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide4 (hbox4#add);
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide5 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 6 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img4 (button4#add);
-      ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img5 (button5#add);
-      ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img6 (button6#add);
-      ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide3 (hbox3#add);
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide4 (hbox4#add);
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide5 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 7 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img4 (button4#add);
-      ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img5 (button5#add);
-      ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img6 (button6#add);
-      ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img7 (button7#add);
-      ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    locked_img8 (hbox3#add);
-    locked_img9 (hbox3#add);
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide4 (hbox4#add);
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide5 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 8 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img4 (button4#add);
-      ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img5 (button5#add);
-      ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img6 (button6#add);
-      ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img7 (button7#add);
-      ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img8 (button8#add);
-      ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    locked_img9 (hbox3#add);
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide4 (hbox4#add);
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide5 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 9 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img4 (button4#add);
-      ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img5 (button5#add);
-      ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img6 (button6#add);
-      ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img7 (button7#add);
-      ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img8 (button8#add);
-      ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img9 (button9#add);
-      ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide4 (hbox4#add);
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide5 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 10 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img4 (button4#add);
-      ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img5 (button5#add);
-      ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img6 (button6#add);
-      ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img7 (button7#add);
-      ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img8 (button8#add);
-      ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img9 (button9#add);
-      ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button10 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img10 (button10#add);
-      ignore (button10#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    locked_img11 (hbox4#add);
-    locked_img12 (hbox4#add);
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide5 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 11 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img4 (button4#add);
-      ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img5 (button5#add);
-      ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img6 (button6#add);
-      ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img7 (button7#add);
-      ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img8 (button8#add);
-      ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img9 (button9#add);
-      ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button10 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img10 (button10#add);
-      ignore (button10#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button11 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img11 (button11#add);
-      ignore (button11#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    locked_img12 (hbox4#add);
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide5 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 12 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img4 (button4#add);
-      ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img5 (button5#add);
-      ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img6 (button6#add);
-      ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img7 (button7#add);
-      ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img8 (button8#add);
-      ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img9 (button9#add);
-      ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button10 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img10 (button10#add);
-      ignore (button10#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button11 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img11 (button11#add);
-      ignore (button11#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button12 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img12 (button12#add);
-      ignore (button12#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    locked_img_wide5 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 13 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img4 (button4#add);
-      ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img5 (button5#add);
-      ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img6 (button6#add);
-      ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img7 (button7#add);
-      ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img8 (button8#add);
-      ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img9 (button9#add);
-      ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button10 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img10 (button10#add);
-      ignore (button10#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button11 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img11 (button11#add);
-      ignore (button11#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button12 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img12 (button12#add);
-      ignore (button12#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button13 = GBin.event_box ~width:333 ~packing:hbox5#add () in
-      unlocked_img13 (button13#add);
-      ignore (button13#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    locked_img14 (hbox5#add);
-    locked_img15 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | 14 ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img4 (button4#add);
-      ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img5 (button5#add);
-      ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img6 (button6#add);
-      ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img7 (button7#add);
-      ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img8 (button8#add);
-      ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img9 (button9#add);
-      ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button10 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img10 (button10#add);
-      ignore (button10#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button11 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img11 (button11#add);
-      ignore (button11#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button12 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img12 (button12#add);
-      ignore (button12#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button13 = GBin.event_box ~width:333 ~packing:hbox5#add () in
-      unlocked_img13 (button13#add);
-      ignore (button13#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button14 = GBin.event_box ~width:333 ~packing:hbox5#add () in
-      unlocked_img14 (button14#add);
-      ignore (button14#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    locked_img15 (hbox5#add);
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
-  | _ ->
-    (* Levels 1-3 *)
-    let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img1 (button1#add);
-      ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l window vbox (); true));
-    let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img2 (button2#add);
-      ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
-      unlocked_img3 (button3#add);
-      ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 4-6 *)
-    let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img4 (button4#add);
-      ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img5 (button5#add);
-      ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
-      unlocked_img6 (button6#add);
-      ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 7-9 *)
-    let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img7 (button7#add);
-      ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img8 (button8#add);
-      ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
-      unlocked_img9 (button9#add);
-      ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 10-12 *)
-    let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button10 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img10 (button10#add);
-      ignore (button10#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button11 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img11 (button11#add);
-      ignore (button11#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button12 = GBin.event_box ~width:333 ~packing:hbox4#add () in
-      unlocked_img12 (button12#add);
-      ignore (button12#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Levels 13-15 *)
-    let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
-    let button13 = GBin.event_box ~width:333 ~packing:hbox5#add () in
-      unlocked_img13 (button13#add);
-      ignore (button13#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button14 = GBin.event_box ~width:333 ~packing:hbox5#add () in
-      unlocked_img14 (button14#add);
-      ignore (button14#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    let button15 = GBin.event_box ~width:333 ~packing:hbox5#add () in
-      unlocked_img15 (button15#add);
-      ignore (button15#event#connect#button_press ~callback:(fun x -> exit 0; true));
-    (* Display the windows and enter Gtk+ main loop *)
-    window#show ();
-    Main.main ()
+    match l with
+    | 1 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      locked_img2 (hbox1#add);
+      locked_img3 (hbox1#add);
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide2 (hbox2#add);
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide3 (hbox3#add);
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide4 (hbox4#add);
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide5 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 2 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      locked_img3 (hbox1#add);
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide2 (hbox2#add);
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide3 (hbox3#add);
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide4 (hbox4#add);
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide5 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 3 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide2 (hbox2#add);
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide3 (hbox3#add);
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide4 (hbox4#add);
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide5 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 4 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img4 (button4#add);
+        ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      locked_img5 (hbox2#add);
+      locked_img6 (hbox2#add);
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide3 (hbox3#add);
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide4 (hbox4#add);
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide5 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 5 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img4 (button4#add);
+        ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img5 (button5#add);
+        ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      locked_img6 (hbox2#add);
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide3 (hbox3#add);
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide4 (hbox4#add);
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide5 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 6 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img4 (button4#add);
+        ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img5 (button5#add);
+        ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img6 (button6#add);
+        ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide3 (hbox3#add);
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide4 (hbox4#add);
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide5 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 7 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img4 (button4#add);
+        ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img5 (button5#add);
+        ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img6 (button6#add);
+        ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img7 (button7#add);
+        ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      locked_img8 (hbox3#add);
+      locked_img9 (hbox3#add);
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide4 (hbox4#add);
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide5 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 8 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img4 (button4#add);
+        ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img5 (button5#add);
+        ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img6 (button6#add);
+        ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img7 (button7#add);
+        ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img8 (button8#add);
+        ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      locked_img9 (hbox3#add);
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide4 (hbox4#add);
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide5 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 9 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img4 (button4#add);
+        ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img5 (button5#add);
+        ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img6 (button6#add);
+        ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img7 (button7#add);
+        ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img8 (button8#add);
+        ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img9 (button9#add);
+        ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide4 (hbox4#add);
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide5 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 10 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img4 (button4#add);
+        ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img5 (button5#add);
+        ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img6 (button6#add);
+        ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img7 (button7#add);
+        ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img8 (button8#add);
+        ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img9 (button9#add);
+        ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button10 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img10 (button10#add);
+        ignore (button10#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      locked_img11 (hbox4#add);
+      locked_img12 (hbox4#add);
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide5 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 11 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img4 (button4#add);
+        ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img5 (button5#add);
+        ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img6 (button6#add);
+        ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img7 (button7#add);
+        ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img8 (button8#add);
+        ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img9 (button9#add);
+        ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button10 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img10 (button10#add);
+        ignore (button10#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button11 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img11 (button11#add);
+        ignore (button11#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      locked_img12 (hbox4#add);
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide5 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 12 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img4 (button4#add);
+        ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img5 (button5#add);
+        ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img6 (button6#add);
+        ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img7 (button7#add);
+        ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img8 (button8#add);
+        ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img9 (button9#add);
+        ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button10 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img10 (button10#add);
+        ignore (button10#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button11 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img11 (button11#add);
+        ignore (button11#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button12 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img12 (button12#add);
+        ignore (button12#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      locked_img_wide5 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 13 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img4 (button4#add);
+        ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img5 (button5#add);
+        ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img6 (button6#add);
+        ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img7 (button7#add);
+        ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img8 (button8#add);
+        ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img9 (button9#add);
+        ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button10 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img10 (button10#add);
+        ignore (button10#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button11 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img11 (button11#add);
+        ignore (button11#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button12 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img12 (button12#add);
+        ignore (button12#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button13 = GBin.event_box ~width:333 ~packing:hbox5#add () in
+        unlocked_img13 (button13#add);
+        ignore (button13#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      locked_img14 (hbox5#add);
+      locked_img15 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | 14 ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img4 (button4#add);
+        ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img5 (button5#add);
+        ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img6 (button6#add);
+        ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img7 (button7#add);
+        ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img8 (button8#add);
+        ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img9 (button9#add);
+        ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button10 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img10 (button10#add);
+        ignore (button10#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button11 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img11 (button11#add);
+        ignore (button11#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button12 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img12 (button12#add);
+        ignore (button12#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button13 = GBin.event_box ~width:333 ~packing:hbox5#add () in
+        unlocked_img13 (button13#add);
+        ignore (button13#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button14 = GBin.event_box ~width:333 ~packing:hbox5#add () in
+        unlocked_img14 (button14#add);
+        ignore (button14#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      locked_img15 (hbox5#add);
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
+    | _ ->
+      (* Levels 1-3 *)
+      let hbox1 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button1 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img1 (button1#add);
+        ignore (button1#event#connect#button_press ~callback:(fun x -> level 1 l st window vbox (); true));
+      let button2 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img2 (button2#add);
+        ignore (button2#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button3 = GBin.event_box ~width:333 ~packing:hbox1#add () in
+        unlocked_img3 (button3#add);
+        ignore (button3#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 4-6 *)
+      let hbox2 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button4 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img4 (button4#add);
+        ignore (button4#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button5 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img5 (button5#add);
+        ignore (button5#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button6 = GBin.event_box ~width:333 ~packing:hbox2#add () in
+        unlocked_img6 (button6#add);
+        ignore (button6#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 7-9 *)
+      let hbox3 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button7 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img7 (button7#add);
+        ignore (button7#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button8 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img8 (button8#add);
+        ignore (button8#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button9 = GBin.event_box ~width:333 ~packing:hbox3#add () in
+        unlocked_img9 (button9#add);
+        ignore (button9#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 10-12 *)
+      let hbox4 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button10 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img10 (button10#add);
+        ignore (button10#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button11 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img11 (button11#add);
+        ignore (button11#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button12 = GBin.event_box ~width:333 ~packing:hbox4#add () in
+        unlocked_img12 (button12#add);
+        ignore (button12#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Levels 13-15 *)
+      let hbox5 = GPack.hbox ~height:86 ~packing:vboxl#add () in
+      let button13 = GBin.event_box ~width:333 ~packing:hbox5#add () in
+        unlocked_img13 (button13#add);
+        ignore (button13#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button14 = GBin.event_box ~width:333 ~packing:hbox5#add () in
+        unlocked_img14 (button14#add);
+        ignore (button14#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      let button15 = GBin.event_box ~width:333 ~packing:hbox5#add () in
+        unlocked_img15 (button15#add);
+        ignore (button15#event#connect#button_press ~callback:(fun x -> exit 0; true));
+      (* Display the windows and enter Gtk+ main loop *)
+      window#show ();
+      Main.main ()
 
 (**)
-let main l () =
-  let window = GWindow.window ~width:999 ~height:750
+let main l st () =
+  let window = GWindow.window ~width:999 ~height:700
       ~title:"Caml 2D" ~show:true () in
   window#connect#destroy ~callback:Main.quit;
   let vbox = GPack.vbox ~packing:window#add () in
-  menu l window vbox ()
+  menu l st window vbox ()
 
 let init = State.init_state 15
 
 (**)
-let () = main 15 ()
+let () = main 15 init ()

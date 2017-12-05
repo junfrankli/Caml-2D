@@ -12,3 +12,5 @@ val update_jumps : input -> state -> unit
 val has_jump : state -> bool
 
 val init_state : int -> state
+
+val update_key : state -> int -> state

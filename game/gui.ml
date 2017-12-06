@@ -87,36 +87,22 @@ let locked_img15 k = GMisc.image ~packing:k
     ~file:"../images/levels/locked/bg15.png" ()
 
 (**)
-let handle_key_press s =
-  let key = GdkEvent.Key.keyval s in
-  match key with
-  | 65362 (*up key*) -> exit 0; true
-  | _ -> (); true
+let rec game n l window vbox () =
+  let e = wait_next_event [Key_pressed] in
+  let key_description = if e.keypressed then Printf.sprintf "Key %c was pressed" e.key else "" in
+  clear_graph ();
+  moveto 0 100; draw_string key_description;
+  if e.key <> '\027' then game n l window vbox () else close 2 window vbox ()
 
 (**)
-let rec level n l window vbox () =
+and close l window vbox () =
+  Graphics.close_graph ();
+  menu l window vbox ()
 
-
-  Graphics.open_graph " 400x400";
-  let img = Graphics.create_image 50 50 in
-  Graphics.draw_image img 0 0;
-  
-  (*let vbox = GPack.vbox ~packing:window#add () in
-  (* Menu bar *)
-  let hbox = GPack.hbox ~width:999 ~height:50 ~packing:vbox#add () in
-  let quit = GBin.event_box ~width:333 ~packing:hbox#add () in
-    lquit_img (quit#add);
-    ignore (quit#event#connect#button_press ~callback:(fun x -> exit 0; true));
-  let back = GBin.event_box ~width:666 ~packing:hbox#add () in
-    lmenu_img (back#add);
-    ignore (back#event#connect#button_press ~callback:(fun x -> menu l window vbox (); true));
-  (* filler space *)
-  let filler = GPack.vbox ~height:700 ~packing:vbox#add () in
-  (* Event Box: test key press *)
-  ignore (window#event#connect#key_press ~callback:((handle_key_press)));
-  (* Display the windows and enter Gtk+ main loop *)
-  window#show ();
-    Main.main ()*)
+(**)
+and level n l window vbox () =
+  Graphics.open_graph " 1000x750";
+  game n l window vbox ()
 
 (**)
 and menu l window vbox () =
@@ -758,4 +744,4 @@ let main l () =
   menu l window vbox ()
 
 (**)
-let () = main 15 ()
+let () = main 1 ()

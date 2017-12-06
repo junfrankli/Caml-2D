@@ -1,10 +1,12 @@
-run:
+old:
+	ocamlfind ocamlc -g -package lablgtk2 graphics.cma -linkpkg gui.ml -o gui
+
+andrew:
 	ocamlc -c state.mli
 	ocamlc state.ml -o state
 	ocamlfind ocamlc -g state.cmo -package lablgtk2 -package camlimages.all -linkpkg gui.ml -o gui
 
-
-old:
+jeff:
 	ocamlbuild -use-ocamlfind -pkgs lablgtk2,graphics,camlimages.all gui.byte
 
 clean:

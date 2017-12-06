@@ -107,7 +107,10 @@ and close l window vbox () =
 (**)
 and level n l window vbox () =
   Graphics.open_graph " 1000x750";
+<<<<<<< HEAD
   Graphics.draw_image (Graphics.make_image test_image) 0 0;
+=======
+>>>>>>> 754d139d3a968eeb554fcb6bd136fd2f54b2c405
   game n l window vbox ()
 
 (**)

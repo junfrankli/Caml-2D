@@ -1,8 +1,3 @@
-open Entities
-open Command
-open Physics
-open Level
-
 type position = int * int
 
 (* keeps track of which keys are pressed down

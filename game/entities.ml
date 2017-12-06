@@ -1,5 +1,3 @@
-open Physics
-
 (*Should be Physics.movement*)
 type movement = Physics.movement
 

@@ -25,4 +25,4 @@ val has_jump : state -> bool
 
 (*[pos_list] is the association list consisting of each
   entity in the current level and their position*)
-val pos_list : (entity * position) list
+val pos_list : (ent * position) list

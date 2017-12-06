@@ -1,4 +1,4 @@
-open State
+(*open State
 open Command
 
 let game_over = false
@@ -15,3 +15,4 @@ and run st =
       let input = parse e.Graphics.key in
       let st' = update_st st input in
       run st'
+*)

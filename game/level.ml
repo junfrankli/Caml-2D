@@ -1,7 +1,3 @@
-open Entities
-open State
-open Physics
-
 type level = {
   obj_list : obj list;
   start_pos : pos;

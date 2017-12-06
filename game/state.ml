@@ -61,7 +61,7 @@ type state = {
   in_air : bool;
   level  : int;
   completed : int list;
-  obj_locs : obj list;
+  positions : (obj * pos) list;
   game_over : bool;
 }
 
@@ -149,8 +149,6 @@ let update_jumps i s =
 
 let has_jump s = if s.player.move.jump > 0 then true else false
 
-let pos_list = []
-
 let init_state l = {
   input     = 0;
   player    = {etype = Being; size = (0.,0.);
@@ -164,29 +162,9 @@ let init_state l = {
   in_air    = false;
   level     = l;
   completed = [];
-  obj_locs  = [];
+  positions = [];
   game_over = false;
 }
 
-(*process_collisions makes the result of each collisions with the player*)
-let process_collisions (st:state) (pl:obj) (col:obj)=
-  match pl.etype, col.etype with
-  | Being, Obstacle _ -> {st with game_over = true}
-  | Being, _ -> failwith "Frank will do collision detection"
-  | _ -> failwith "lol"
-
-(*check_collisions iterates through list of objects with possible collisons*)
-let rec check_collisions (acc:obj list) (st:state): state =
-  match acc with
-  | [] -> st
-  | h::t -> process_collisions st st.player h |> check_collisions t
-
 let update_key st k =
   {st with input = k}
-
-let update_state (st:state) (i:input) : state =
-  match i with
-  | Left  -> check_collisions st.obj_locs st
-  | Right -> st
-  | Jump  -> st
-  | Shoot -> st

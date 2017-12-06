@@ -1,28 +1,16 @@
-open Entities
-open Command
-
 type state
 
-(*Represents the position in coordinates of the player*)
-type position
+type obj
 
-(*Represents the player's velocity*)
-val vel : state -> float
+type input
 
-(*Represents the player's acceleration*)
-val acc : state -> float
+type level
 
-(*[num_jumps] is the number of jumps the player has left.
-  The player has double-jump capabilities so the initial
-  value is 2 and should reset to 2 when the player entity
-  contacts a ground entity.*)
-val num_jumps : int
-
-val update_jumps : Command.input  -> int ref -> int
+val update_jumps : input -> state -> unit
 
 (*[has_jump] is true if the player can jump at least one more time*)
 val has_jump : state -> bool
 
-(*[pos_list] is the association list consisting of each
-  entity in the current level and their position*)
-val pos_list : (ent * position) list
+val init_state : int -> state
+
+val update_key : state -> int -> state

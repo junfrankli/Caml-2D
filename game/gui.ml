@@ -60,6 +60,7 @@ let locked_stage_img n k =
   | _ -> GMisc.image ~packing:k
     ~file:"../images/levels/locked/stage5.png" ()
 
+(* Images: locked levels *)
 let locked_level_img n k =
   match n with
   | 2 -> GMisc.image ~packing:k
@@ -91,7 +92,7 @@ let locked_level_img n k =
   | _ -> GMisc.image ~packing:k
     ~file:"../images/levels/locked/bg15.png" ()
 
-(*Game Images*)
+(* Game Images *)
 (*let test_image = Png.load_as_rgb24 "../images/levels/bg1.png" [] |> Graphic_image.array_of_image*)
 
 (**)

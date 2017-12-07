@@ -177,36 +177,37 @@ let update_movey s =
   eheck step y, if collide, reset y else dont
   update player face
   update if jump is reset*)
-let update_player player state =
+let update_player state =
+  let p = state.player in
   let init_move = state.player.move in
-  let lst = broad_phase player in
+  let lst = broad_phase p in
   (match state.input with
    | 97  -> state.player.isRight <- false
    | 100 -> state.player.isRight <- true
    | _   -> state.player.isRight <- state.player.isRight);
     if killed lst state then
-      player.move.loc.x <- fst state.start;
-      player.move.loc.y <- snd state.start;
-      player.move.v     <- {xvel = 0.; yvel = 0.};
-      player.move.targetVelocity <- {xvel = 0.; yvel = 0.};
-      player.move.jump  <- 2;
+      p.move.loc.x <- fst state.start;
+      p.move.loc.y <- snd state.start;
+      p.move.v     <- {xvel = 0.; yvel = 0.};
+      p.move.targetVelocity <- {xvel = 0.; yvel = 0.};
+      p.move.jump  <- 2;
     (*collide in x*)
     update_movex state;
     let lst_x = broad_phase (state.player) in
     if narrow_phase lst_x state then
-      player.move.loc.x <- init_move.loc.x;
-      player.move.v.xvel <- 0.;
-      player.move.targetVelocity.xvel <- 0.;
+      p.move.loc.x <- init_move.loc.x;
+      p.move.v.xvel <- 0.;
+      p.move.targetVelocity.xvel <- 0.;
     (*collide in y*)
     update_movey state;
     let lst_y = broad_phase (state.player) in
     if narrow_phase lst_y state then
-      let init_yvel = player.move.v.yvel in
-      player.move.loc.y  <- init_move.loc.y;
-      player.move.v.yvel <- 0.;
-      player.move.targetVelocity.yvel <- 0.;
+      let init_yvel = p.move.v.yvel in
+      p.move.loc.y  <- init_move.loc.y;
+      p.move.v.yvel <- 0.;
+      p.move.targetVelocity.yvel <- 0.;
       if init_yvel <= 0. then
-        player.move.jump <- 2
+        p.move.jump <- 2
 
 
 

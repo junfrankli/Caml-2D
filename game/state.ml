@@ -37,6 +37,7 @@ type tile =
   | Spike
   | Ground
   | Wall
+  | GGEZ
 
 type obj = {
   size   : float * float;
@@ -101,22 +102,22 @@ let aabb_collision ob1 ob2 =
 (*[broad_phase] is the list of tile indexes that the player is intersecting with.
 *)
 let broad_phase player =
-  let box = get_aabb player in
-  let left = floor ((fst box.center)-.box.width_rad) in
-  let right = ceil ((fst box.center)+.box.width_rad) in
-  let up = ceil ((snd box.center)+.box.height_rad) in
-  let down = floor ((snd box.center)-.box.height_rad) in
-  if up -. down = 2. then if right -. left = 2. then
-      [(left,down);(left,up-.1.);(right-.1.,down);(right-.1.,up-.1.)] else
-      [(left,down);(left,up-.1.)] else if right -. left = 2. then
-    [(left,down);(right-.1.,down)]  else [(left,down)]
+  let box   = get_aabb player in
+  let left  = int_of_float (floor ((fst box.center)-.box.width_rad)) in
+  let right = int_of_float (ceil ((fst box.center)+.box.width_rad)) in
+  let up    = int_of_float (ceil ((snd box.center)+.box.height_rad)) in
+  let down  = int_of_float (floor ((snd box.center)-.box.height_rad)) in
+  if up - down = 2 then if right - left = 2 then
+      [(left,down);(left,up-1);(right-1,down);(right-1,up-1)] else
+      [(left,down);(left,up-1)] else if right - left = 2 then
+    [(left,down);(right-1,down)]  else [(left,down)]
 
 (*[killed lst state] determines if there exists a Spike tile in [lst] and
   returns [true] if there does exist one.*)
 let rec killed lst state =
   match lst with
   | [] -> false
-  | (k,v)::t -> if List.mem_assoc ((k,v)) state.tile_locs then killed t state else
+  | (k,v)::t -> if not (List.mem_assoc ((k,v)) state.tile_locs) then killed t state else
       match List.assoc (k,v) state.tile_locs with
       | Spike -> true
       | _ -> killed t state
@@ -125,7 +126,7 @@ let rec killed lst state =
 let rec narrow_phase lst state =
   match lst with
   | [] -> false
-  | (k,v)::t -> if List.mem_assoc ((k,v)) state.tile_locs then killed t state else
+  | (k,v)::t -> if not (List.mem_assoc ((k,v)) state.tile_locs) then killed t state else
       match List.assoc (k,v) state.tile_locs with
       | Ground -> true
       | Wall   -> true
@@ -160,7 +161,7 @@ let update_player player state =
    | 97  -> state.player.isRight <- false
    | 100 -> state.player.isRight <- true
    | _   -> state.player.isRight <- state.player.isRight);
-    if killed (lst |> cast_ftoi) state then
+    if killed lst state then
       player.move.loc.x <- fst state.start;
       player.move.loc.y <- snd state.start;
       player.move.v     <- {xvel = 0.; yvel = 0.};
@@ -169,14 +170,14 @@ let update_player player state =
     (*collide in x*)
     update_movex state;
     let lst_x = broad_phase (state.player) in
-    if narrow_phase (lst_x |> cast_ftoi) state then
+    if narrow_phase lst_x state then
       player.move.loc.x <- init_move.loc.x;
       player.move.v.xvel <- 0.;
       player.move.targetVelocity.xvel <- 0.;
     (*collide in y*)
     update_movey state;
     let lst_y = broad_phase (state.player) in
-    if narrow_phase (lst_y |> cast_ftoi) state then
+    if narrow_phase lst_y state then
       let init_yvel = player.move.v.yvel in
       player.move.loc.y  <- init_move.loc.y;
       player.move.v.yvel <- 0.;
@@ -239,7 +240,16 @@ let init_state level = {
   start     = (0.,0.)
 }
 
-
+let reach_end state =
+  let lst = broad_phase state.player in
+  let rec help lst state =
+    match (broad_phase state.player) with
+    | [] -> false
+    | (k,v)::t -> if not (List.mem_assoc ((k,v)) state.tile_locs) then help t state else
+        match List.assoc (k,v) state.tile_locs with
+        | GGEZ -> true
+        | _ -> help t state in
+  help lst state
 
 let update_key st k =
   {st with input = k}

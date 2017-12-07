@@ -17,3 +17,5 @@ type state = {
 }
 
 val init_state : level -> state
+
+val reach_end : state -> bool

@@ -230,3 +230,32 @@ let level6 = {
   start_pos = (0,7);
   exit = (5,5)
 }
+
+  let level8 = {
+    l = 8;
+    obj_list = [("ground",0,0);("ground",0,1);("ground",0,2);("ground",0,3);
+                ("ground",0,4);("fire",0,5);("fire",0,6);("fire",0,7);
+                ("fire",0,8);("fire",0,9);("fire",0,10);("fire",0,11);
+                ("fire",0,12);("fire",0,13);("ground",1,0);("ground",1,1);
+                ("fire",1,2);("fire",1,3);("fire",1,4);("ground",2,0);
+                ("fire",2,1);("ground",3,0);("fire",3,1);("ground",3,8);
+                ("fire",3,9);("fire",3,12);("ground",3,13);("ground",4,0);
+                ("ground",4,1);("ground",4,8);("fire",4,9);("fire",4,12);
+                ("ground",4,13);("ground",5,0);("ground",5,1);("ground",5,8);
+                ("ground",5,13);("fire",6,0);("ground",6,8);("fire",6,9);
+                ("fire",6,12);("ground",6,13);"ground",7,0);("ground",7,1);
+                ("ground",7,8);("ground",7,13);"ground",8,0);("ground",8,1);
+                ("ground",8,8);("ground",8,13);("fire",9,0);("fire",9,4);
+                ("ground",9,5);("ground",9,6);("fire",9,7);("fire",10,0);
+                ("fire",10,4);("ground",10,5);("ground",10,6);("fire",10,7);
+                ("ground",11,0);("ground",11,1);("ground",11,8);("ground",12,0);
+                ("ground",12,1);("ground",12,2);("ground",12,8);("ground",13,0);
+                ("ground",13,1);("ground",13,2);("ground",13,3);("ground",13,8);
+                ("ground",14,0);("ground",14,1);("ground",14,2);("fire",14,7);
+                ("fire",15,0);("fire",15,1);("fire",15,7);("fire",16,0);
+                ("ground",16,8);("ground",17,0);("ground",17,3);("ground",17,8);
+                ("ground",18,0);("ground",18,3);("ground",18,8);
+                ("ground",19,0);("ground",19,3);("ground",19,8)];
+    start_pos = (19,9);
+    exit = (19,1)
+  }

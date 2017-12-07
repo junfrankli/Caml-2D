@@ -220,11 +220,11 @@ let update_player state =
 
       if v1 then
 
-        state.player.move.loc.x <- fst state.start;
+        state.player.move.loc.x <- fst state.start +. ((fst state.player.size) /. 2.);
 
       if v1 then
 
-        state.player.move.loc.y <- snd state.start;
+        state.player.move.loc.y <- snd state.start +. ((snd state.player.size) /. 2.);
 
       if v1 then
 
@@ -358,7 +358,8 @@ let init_state level = {
   in_air    = false;
   lvl       = level.l;
   tile_locs = (level.exit, GGEZ)::(init_tile level.obj_list []);
-  start     = (0.,0.);
+  start     = (level.start_pos |> fst |> float_of_int,
+               level.start_pos |> snd |> float_of_int);
   count = 0
 }
 

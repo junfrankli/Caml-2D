@@ -56,8 +56,9 @@ type state = {
   input  : int;
   player : obj;
   in_air : bool;
-  lvl   : level;
+  lvl    : int;
   tile_locs : ((int*int)*tile) list;
+  start  : float*float
 }
 
 type aabb = {
@@ -81,16 +82,6 @@ let update_vel s =
               +. (1.0 -. m.a.xacc)*.m.v.xvel;
   m.v.yvel <- m.a.yacc*.m.targetVelocity.yvel
               +. (1.0 -. m.a.yacc)*.m.v.yvel
-
-
-let update_move s =
-  let m = s.player.move in
-  m.loc.x <- m.loc.x +. m.v.xvel;
-  m.loc.y <- m.loc.y +. m.v.yvel;
-  if m.loc.x < 0.  then m.loc.x <- 0.;
-  if m.loc.y < 0.  then m.loc.y <- 0.;
-  if m.loc.x > 20. then m.loc.x <- 20.;
-  if m.loc.y > 20. then m.loc.y <- 20.
 
 (*[get_aabb ob] takes an object [ob] and returns an axis-aligned bouding box.*)
 let get_aabb (ob : obj) =
@@ -137,14 +128,31 @@ let rec killed lst state =
       | _ -> killed t state
 (*[narrow_phase] checks for collisions and mutates the player movement parameters
   accordingly given [lst] of tile intersections*)
+let rec narrow_phase lst state =
+  match lst with
+  | [] -> false
+  | (k,v)::t -> if List.mem_assoc ((k,v)) state.tile_locs then killed t state else
+      match List.assoc (k,v) state.tile_locs with
+      | Ground -> true
+      | Wall   -> true
+      | _ -> narrow_phase t state
 
 let rec cast_ftoi lst =
   match lst with
   | [] -> []
   | (k,v)::t -> (int_of_float k, int_of_float v) :: (cast_ftoi t)
 
-let col_x lst state =
-  true
+let update_movex s =
+  let m = s.player.move in
+  m.loc.x <- m.loc.x +. m.v.xvel;
+  if m.loc.x < 0.  then m.loc.x <- 0.;
+  if m.loc.x > 20. then m.loc.x <- 20.
+
+let update_movey s =
+  let m = s.player.move in
+  m.loc.y <- m.loc.y +. m.v.yvel;
+  if m.loc.y < 0.  then m.loc.y <- 0.;
+  if m.loc.y > 20. then m.loc.y <- 20.
 
 (*1 Killed -> Reset
   check step x, if collide, reset x else dont
@@ -152,31 +160,34 @@ let col_x lst state =
   update player face
   update if jump is reset*)
 let update_player player state =
-  update_move state;
+  let init_move = state.player.move in
   let lst = broad_phase player in
-  match state.input with
-  | 97  -> state.player.isRight <- false
-  | 100 -> state.player.isRight <- true
-  | _   -> state.player.isRight <- state.player.isRight;
+  (match state.input with
+   | 97  -> state.player.isRight <- false
+   | 100 -> state.player.isRight <- true
+   | _   -> state.player.isRight <- state.player.isRight);
     if killed (lst |> cast_ftoi) state then
-      player.move.loc.x <- state.lvl.start_pos |> fst |> float_of_int;
-    player.move.loc.y <- state.lvl.start_pos |> snd |> float_of_int;
-    player.move.a     <- {xacc = 0.; yacc = 0.};
-    player.move.v     <- {xvel = 0.; yvel = 0.};
-    player.move.targetVelocity <- {xvel = 0.; yvel = 0.};
-    player.move.jump  <- 0;
+      player.move.loc.x <- fst state.start;
+      player.move.loc.y <- snd state.start;
+      player.move.v     <- {xvel = 0.; yvel = 0.};
+      player.move.targetVelocity <- {xvel = 0.; yvel = 0.};
+      player.move.jump  <- 2;
     (*collide in x*)
-    if col_x lst state then
-      player.move.a.xacc <- 0.;
-    player.move.v.xvel <- 0.;
-    player.move.targetVelocity.xvel <- 0.;
+    update_movex state;
+    let lst_x = broad_phase (state.player) in
+    if narrow_phase (lst_x |> cast_ftoi) state then
+      player.move.loc.x <- init_move.loc.x;
+      player.move.v.xvel <- 0.;
+      player.move.targetVelocity.xvel <- 0.;
     (*collide in y*)
-    if true then
+    update_movey state;
+    let lst_y = broad_phase (state.player) in
+    if narrow_phase (lst_y |> cast_ftoi) state then
       let init_yvel = player.move.v.yvel in
-      player.move.a.yacc <- 0.;
+      player.move.loc.y  <- init_move.loc.y;
       player.move.v.yvel <- 0.;
       player.move.targetVelocity.yvel <- 0.;
-      if init_yvel < 0. then
+      if init_yvel <= 0. then
         player.move.jump <- 2
 
 
@@ -229,8 +240,9 @@ let init_state level = {
                  jump= 2
                }; switch = []; isRight = true};
   in_air    = false;
-  lvl       = level;
+  lvl       = level.l;
   tile_locs = init_tile level.obj_list [];
+  start     = (0.,0.)
 }
 
 

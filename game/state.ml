@@ -7,9 +7,6 @@ type pos = {
   mutable y : float;
 }
 
-(*Default for now*)
-let gravity = 9.8
-
 type acc_con = float
 
 type target_speed = float
@@ -179,7 +176,8 @@ let update_movey s =
   update if jump is reset*)
 let update_player state =
   let p = state.player in
-  let init_move = state.player.move in
+  let init_movex = state.player.move.loc.x in
+  let init_movey = state.player.move.loc.y in
   let lst = broad_phase p in
   (match state.input with
    | 97  -> state.player.isRight <- false
@@ -195,7 +193,7 @@ let update_player state =
     update_movex state;
     let lst_x = broad_phase (state.player) in
     if narrow_phase lst_x state then
-      p.move.loc.x <- init_move.loc.x;
+      p.move.loc.x <- init_movex;
       p.move.v.xvel <- 0.;
       p.move.targetVelocity.xvel <- 0.;
     (*collide in y*)
@@ -203,7 +201,8 @@ let update_player state =
     let lst_y = broad_phase (state.player) in
     if narrow_phase lst_y state then
       let init_yvel = p.move.v.yvel in
-      p.move.loc.y  <- init_move.loc.y;
+      print_endline "wtf";
+      p.move.loc.y  <- init_movey;
       p.move.v.yvel <- 0.;
       p.move.targetVelocity.yvel <- 0.;
       if init_yvel <= 0. then

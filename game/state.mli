@@ -4,6 +4,7 @@ type tile =
   | Spike
   | Ground
   | Wall
+  | GGEZ
 
 type obj
 

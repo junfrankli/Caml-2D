@@ -8,7 +8,11 @@ type tile =
 
 type obj
 
-type input
+type input =
+  | Left
+  | Right
+  | Jump
+  | Nothing
 
 type state = {
   input  : int;

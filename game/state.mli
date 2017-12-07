@@ -7,6 +7,8 @@ type tile =
 
 type obj
 
+type input
+
 type state = {
   input  : int;
   player : obj;
@@ -19,3 +21,5 @@ type state = {
 val init_state : level -> state
 
 val reach_end : state -> bool
+
+val update_key : state -> input -> unit

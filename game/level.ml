@@ -215,6 +215,7 @@ let level5 = {
 }
 
 let level6 = {
+  l = 6;
   obj_list = [("fire",0,14);("fire",0,13);("fire",1,4);("fire",2,4);
               ("fire",3,4);("fire",4,4);("fire",4,5);("fire",1,5);("grass",1,6);
               ("grass",0,6);("grass",4,6);("fire",2,8);("grass",2,9)

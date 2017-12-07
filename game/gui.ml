@@ -126,8 +126,6 @@ let rec init_level (n:int) (l:int) window vbox () =
   let back = GBin.event_box ~width:666 ~packing:hbox#add () in
   lmenu_img (back#add);
   ignore (back#event#connect#button_press ~callback:(fun x -> menu l window vbox (); true));
-  (* Event Box: test key press *)
-  ignore (window#event#connect#key_press ~callback:(key_press));
   (* Game Space *)
   let game = GPack.fixed ~width:999 ~height:750 ~packing:vbox#add () in
   let bg =
@@ -158,34 +156,40 @@ let rec init_level (n:int) (l:int) window vbox () =
     | 5 -> level5
     | _ -> level6 in
   let st:state = init_state (lev l) in
-  state_to_gui st n l window vbox game;
-  move st n l window vbox game;
+  (* Event Box: detect key press *)
+  ignore (window#event#connect#key_press ~callback:(key_press st n l window vbox game));
+  state_to_gui st.tile_locs game;
   window#show ();
   Main.main ()
 
 (**)
-and move st n l window vbox game = ()
+and move key st n l window vbox game () = ()
 
-and state_to_gui st (n:int) (l:int) window vbox game=
-  match st.tile_locs with
+and state_to_gui locs game=
+  match locs with
   | [] -> ()
   | ((x,y), Spike)::t ->
     let obj = GMisc.image ~file:"../images/tiles/spike.png" () in
     game#put obj#coerce (50*x) (750-50*y);
+    state_to_gui t game;
   | ((x, y), Ground)::t ->
     let obj = GMisc.image ~file:"../images/tiles/stone1.png" () in
     game#put obj#coerce (50*x) (750-50*y);
+    state_to_gui t game;
   | ((x, y), Wall)::t ->
     let obj = GMisc.image ~file:"../images/tiles/stone2.png" () in
     game#put obj#coerce (50*x) (750-50*y);
+    state_to_gui t game;
 
 (**)
-and key_press s =
+and key_press st n l window vbox game s =
+  print_endline "key pressed";
   let key = GdkEvent.Key.keyval s in
   match key with
-  | 119 (* W *) -> Jump
-  | 97 (* A *) -> Left
-  | 100 (* D *) -> Right
+  | 119 (* W *) -> exit 0; update_key st Jump; move Jump st n l window vbox game (); true
+  | 97 (* A *) -> exit 0; update_key st Left; move Left st n l window vbox game (); true
+  | 100 (* D *) -> exit 0; update_key st Right; move Right st n l window vbox game (); true
+  | _ -> (); true
 
 (**)
 and menu l window vbox ():unit =

@@ -1,4 +1,3 @@
-open State
 open GMain
 open GdkKeysyms
 
@@ -92,7 +91,26 @@ let locked_level_img n k =
   | 14 -> GMisc.image ~packing:k
     ~file:"../images/levels/locked/bg14.png" ()
   | _ -> GMisc.image ~packing:k
-    ~file:"../images/levels/locked/bg15.png" ()
+           ~file:"../images/levels/locked/bg15.png" ()
+
+(* Images: level backgrounds. *)
+let bg_img n =
+  match n with
+  | 1 -> GMisc.image ~file:"../images/levels/bg1.png" ()
+  | 2 -> GMisc.image ~file:"../images/levels/bg2.png" ()
+  | 3 -> GMisc.image ~file:"../images/levels/bg3.png" ()
+  | 4 -> GMisc.image ~file:"../images/levels/bg4.png" ()
+  | 5 -> GMisc.image ~file:"../images/levels/bg5.png" ()
+  | 6 -> GMisc.image ~file:"../images/levels/bg6.png" ()
+  | 7 -> GMisc.image ~file:"../images/levels/bg7.png" ()
+  | 8 -> GMisc.image ~file:"../images/levels/bg8.png" ()
+  | 9 -> GMisc.image ~file:"../images/levels/bg9.png" ()
+  | 10 -> GMisc.image ~file:"../images/levels/bg10.png" ()
+  | 11 -> GMisc.image ~file:"../images/levels/bg11.png" ()
+  | 12 -> GMisc.image ~file:"../images/levels/bg12.png" ()
+  | 13 -> GMisc.image ~file:"../images/levels/bg13.png" ()
+  | 14 -> GMisc.image ~file:"../images/levels/bg14.png" ()
+  | _ -> GMisc.image ~file:"../images/levels/bg15.png" ()
 
 (**)
 let rec level n l window vbox st () =
@@ -107,54 +125,54 @@ let rec level n l window vbox st () =
   lmenu_img (back#add);
   ignore (back#event#connect#button_press ~callback:(fun x -> menu l window vbox st (); true));
   (* Event Box: test key press *)
-  ignore (window#event#connect#key_press ~callback:((key_press)));
+  ignore (window#event#connect#key_press ~callback:((key_press n l window vbox st)));
   (* Game Space *)
   let game = GPack.fixed ~width:999 ~height:750 ~packing:vbox#add () in
   match n with
   | 1 ->
-    let bg = GMisc.image ~file:"../images/levels/bg1.png" () in
+    let bg = bg_img 1 in
     game#put bg#coerce 0 0;
   | 2 ->
-    let bg = GMisc.image ~file:"../images/levels/bg2.png" () in
+    let bg = bg_img 2 in
     game#put bg#coerce 0 0;
   | 3 ->
-    let bg = GMisc.image ~file:"../images/levels/bg3.png" () in
+    let bg = bg_img 3 in
     game#put bg#coerce 0 0;
   | 4 ->
-    let bg = GMisc.image ~file:"../images/levels/bg4.png" () in
+    let bg = bg_img 4 in
     game#put bg#coerce 0 0;
   | 5 ->
-    let bg = GMisc.image ~file:"../images/levels/bg5.png" () in
+    let bg = bg_img 5 in
     game#put bg#coerce 0 0;
   | 6 ->
-    let bg = GMisc.image ~file:"../images/levels/bg6.png" () in
+    let bg = bg_img 6 in
     game#put bg#coerce 0 0;
   | 7 ->
-    let bg = GMisc.image ~file:"../images/levels/bg7.png" () in
+    let bg = bg_img 7 in
     game#put bg#coerce 0 0;
   | 8 ->
-    let bg = GMisc.image ~file:"../images/levels/bg8.png" () in
+    let bg = bg_img 8 in
     game#put bg#coerce 0 0;
   | 9 ->
-    let bg = GMisc.image ~file:"../images/levels/bg9.png" () in
+    let bg = bg_img 9 in
     game#put bg#coerce 0 0;
   | 10 ->
-    let bg = GMisc.image ~file:"../images/levels/bg10.png" () in
+    let bg = bg_img 10 in
     game#put bg#coerce 0 0;
   | 11 ->
-    let bg = GMisc.image ~file:"../images/levels/bg11.png" () in
+    let bg = bg_img 11 in
     game#put bg#coerce 0 0;
   | 12 ->
-    let bg = GMisc.image ~file:"../images/levels/bg12.png" () in
+    let bg = bg_img 12 in
     game#put bg#coerce 0 0;
   | 13 ->
-    let bg = GMisc.image ~file:"../images/levels/bg13.png" () in
+    let bg = bg_img 13 in
     game#put bg#coerce 0 0;
   | 14 ->
-    let bg = GMisc.image ~file:"../images/levels/bg14.png" () in
+    let bg = bg_img 14 in
     game#put bg#coerce 0 0;
   | _ ->
-    let bg = GMisc.image ~file:"../images/levels/bg15.png" () in
+    let bg = bg_img 15 in
     game#put bg#coerce 0 0;
   (* Display the windows and enter Gtk+ main loop *)
   window#show ();
@@ -180,7 +198,7 @@ and state_to_gui locs n l window vbox game=
     game#put obj#coerce (50*x) (750-50*y);
 
 (**)
-and key_press s =
+and key_press n l window vbox st s =
   let key = GdkEvent.Key.keyval s in
   match key with
   | 65362 (*up key*) -> exit 0; true
@@ -196,7 +214,7 @@ and menu l window vbox st () =
     mquit_img (quit#add);
     ignore (quit#event#connect#button_press ~callback:(fun x -> exit 0; true));
   (* Title *)
-  let vboxt = GPack.vbox ~height:270 ~packing:vbox#add () in
+  let vboxt = GPack.vbox ~height:320 ~packing:vbox#add () in
   let title = title_img (vboxt#add) in
   (* Menu Box *)
   let vboxl = GPack.vbox ~height:430 ~packing:vbox#add () in
@@ -800,7 +818,7 @@ and menu l window vbox st () =
 
 (**)
 let main l () =
-  let window = GWindow.window ~width:999 ~height:750
+  let window = GWindow.window ~width:999 ~height:800
       ~title:"Caml 2D" ~show:true () in
   window#connect#destroy ~callback:Main.quit;
   let vbox = GPack.vbox ~packing:window#add () in

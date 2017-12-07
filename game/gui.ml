@@ -186,9 +186,9 @@ and key_press st n l window vbox game s =
   print_endline "key pressed";
   let key = GdkEvent.Key.keyval s in
   match key with
-  | 119 (* W *) -> exit 0; update_key st Jump; move Jump st n l window vbox game (); true
-  | 97 (* A *) -> exit 0; update_key st Left; move Left st n l window vbox game (); true
-  | 100 (* D *) -> exit 0; update_key st Right; move Right st n l window vbox game (); true
+  | 119 (* W *) -> update_key st Jump; move Jump st n l window vbox game (); exit 0; true
+  | 97 (* A *) -> update_key st Left; move Left st n l window vbox game (); exit 0; true
+  | 100 (* D *) -> update_key st Right; move Right st n l window vbox game (); exit 0; true
   | _ -> (); true
 
 (**)

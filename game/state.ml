@@ -196,7 +196,7 @@ type input =
   | Left
   | Right
   | Jump
-  | Shoot
+  | Nothing
 
 let update_jumps i s =
   if s.player.move.jump = 0 then raise (NoJump "0 jumps")
@@ -219,10 +219,7 @@ let rec init_tile lst acc =
       | "rspike" -> init_tile t (((v,l),Spike)::acc)
       | "ground" -> init_tile t (((v,l),Wall)::acc)
       | "grass" -> init_tile t (((v,l),Ground)::acc)
-      | "uspike" -> init_tile t (((v,l),Spike)::acc)
-      | "dspike" -> init_tile t (((v,l),Spike)::acc)
-      | "lspike" -> init_tile t (((v,l),Spike)::acc)
-      | "rspike" -> init_tile t (((v,l),Spike)::acc)
+      | _ -> init_tile t (((v,l),Ground)::acc)
     )
 let init_state level = {
   input     = 0;
@@ -251,8 +248,12 @@ let reach_end state =
         | _ -> help t state in
   help lst state
 
-let update_key st k =
-  {st with input = k}
+let update_key st i =
+  match i with
+  | Left  -> st.player.move.targetVelocity.xvel <- -1.; st.player.isRight <- false
+  | Right -> st.player.move.targetVelocity.xvel <- 1.;  st.player.isRight <- true
+  | Jump  -> st.player.move.targetVelocity.yvel <- 5.
+  | Nothing -> st.player.move.targetVelocity <- {xvel = 0.; yvel = 0.}
 
 (*let update_state (st:state) (i:input) : state =
   match i with

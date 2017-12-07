@@ -7,6 +7,9 @@ type pos = {
   mutable y : float;
 }
 
+(*Default for now*)
+let gravity = 9.8
+
 type acc_con = float
 
 type target_speed = float
@@ -68,7 +71,8 @@ type state = {
   in_air : bool;
   lvl    : int;
   tile_locs : ((int*int)*tile) list;
-  start  : float*float
+  start  : float*float;
+  mutable count : int
 }
 
 type aabb = {
@@ -90,7 +94,7 @@ let update_vel s =
   let m = s.player.move in
   m.v.xvel <- m.a.xacc*.m.targetVelocity.xvel
               +. (1.0 -. m.a.xacc)*.m.v.xvel;
-  m.v.yvel <- m.a.yacc*.m.targetVelocity.yvel
+  m.v.yvel <- m.a.yacc*.(m.targetVelocity.yvel-.0.2)
               +. (1.0 -. m.a.yacc)*.m.v.yvel
 
 (*[get_aabb ob] takes an object [ob] and returns an axis-aligned bounding box.*)
@@ -157,55 +161,124 @@ let rec cast_ftoi lst =
   | [] -> []
   | (k,v)::t -> (int_of_float k, int_of_float v) :: (cast_ftoi t)
 
-let update_movex s =
-  let m = s.player.move in
-  m.loc.x <- m.loc.x +. m.v.xvel;
-  if m.loc.x < 0.  then m.loc.x <- 0.;
-  if m.loc.x > 20. then m.loc.x <- 20.
+  let update_movex s =
 
-let update_movey s =
-  let m = s.player.move in
-  m.loc.y <- m.loc.y +. m.v.yvel;
-  if m.loc.y < 0.  then m.loc.y <- 0.;
-  if m.loc.y > 20. then m.loc.y <- 20.
+    let m = s.player.move in
 
-(*1 Killed -> Reset
-  check step x, if collide, reset x else dont
-  eheck step y, if collide, reset y else dont
-  update player face
-  update if jump is reset*)
+    m.loc.x <- m.loc.x +. m.v.xvel;
+
+    if m.loc.x < 0.  then m.loc.x <- 0.;
+
+    if m.loc.x > 20. then m.loc.x <- 20.
+
+
+
+  let update_movey s =
+
+    let m = s.player.move in
+
+    m.loc.y <- m.loc.y +. m.v.yvel;
+
+    if m.loc.y < 0.  then m.loc.y <- 0.;
+
+    if m.loc.y > 15. then m.loc.y <- 15.
+
+
+
+  (*1 Killed -> Reset
+
+    check step x, if collide, reset x else dont
+
+    eheck step y, if collide, reset y else dont
+
+    update player face
+
+    update if jump is reset*)
+
 let update_player state =
-  let p = state.player in
-  let init_movex = state.player.move.loc.x in
-  let init_movey = state.player.move.loc.y in
-  let lst = broad_phase p in
-  (match state.input with
-   | 97  -> state.player.isRight <- false
-   | 100 -> state.player.isRight <- true
-   | _   -> state.player.isRight <- state.player.isRight);
-    if killed lst state then
-      p.move.loc.x <- fst state.start;
-      p.move.loc.y <- snd state.start;
-      p.move.v     <- {xvel = 0.; yvel = 0.};
-      p.move.targetVelocity <- {xvel = 0.; yvel = 0.};
-      p.move.jump  <- 2;
-    (*collide in x*)
-    update_movex state;
-    let lst_x = broad_phase (state.player) in
-    if narrow_phase lst_x state then
-      p.move.loc.x <- init_movex;
-      p.move.v.xvel <- 0.;
-      p.move.targetVelocity.xvel <- 0.;
-    (*collide in y*)
-    update_movey state;
-    let lst_y = broad_phase (state.player) in
-    if narrow_phase lst_y state then
-      let init_yvel = p.move.v.yvel in
-      p.move.loc.y  <- init_movey;
-      p.move.v.yvel <- 0.;
-      p.move.targetVelocity.yvel <- 0.;
+    update_vel state;
+
+    let init_movex = state.player.move.loc.x in
+
+    let init_movey = state.player.move.loc.y in
+
+    let lst = broad_phase state.player in
+
+    (match state.input with
+
+     | 97  -> state.player.isRight <- false
+
+     | 100 -> state.player.isRight <- true
+
+     | _   -> state.player.isRight <- state.player.isRight);
+
+    let v1 = killed lst state in
+
+      if v1 then
+
+        state.player.move.loc.x <- fst state.start;
+
+      if v1 then
+
+        state.player.move.loc.y <- snd state.start;
+
+      if v1 then
+
+        state.player.move.v     <- {xvel = 0.; yvel = 0.};
+
+      if v1 then
+
+        state.player.move.targetVelocity <- {xvel = 0.; yvel = 0.};
+
+      if v1 then
+
+         state.player.move.jump  <- 2;
+
+      (*collide in x*)
+
+      update_movex state;
+
+      let lst_x = broad_phase (state.player) in
+
+      let v2 = narrow_phase lst_x state in
+
+      if v2 then
+
+        state.player.move.loc.x <- init_movex;
+
+      if v2 then
+
+        state.player.move.v.xvel <- 0.;
+
+      if v2 then
+
+        state.player.move.targetVelocity.xvel <- 0.;
+
+      (*collide in y*)
+
+      update_movey state;
+
+      let lst_y = broad_phase (state.player) in
+
+      let v3 = narrow_phase lst_y state in
+
+      let init_yvel = state.player.move.v.yvel in
+
+      if v3 then
+
+        state.player.move.loc.y  <- init_movey;
+
+      if v3 then
+
+        state.player.move.v.yvel <- 0.;
+
+      if v3 then
+
+        state.player.move.targetVelocity.yvel <- 0.;
+
       if init_yvel <= 0. then
-        p.move.jump <- 2
+
+        state.player.move.jump <- 2
 
 
 
@@ -273,7 +346,8 @@ let init_state level = {
   in_air    = false;
   lvl       = level.l;
   tile_locs = (level.exit, GGEZ)::(init_tile level.obj_list []);
-  start     = (0.,0.)
+  start     = (0.,0.);
+  count = 0
 }
 
 let reach_end state =
@@ -289,9 +363,10 @@ let reach_end state =
 
 let update_key st i =
   match i with
-  | Left  -> st.player.move.targetVelocity.xvel <- -1.; st.player.isRight <- false
-  | Right -> st.player.move.targetVelocity.xvel <- 1.;  st.player.isRight <- true
-  | Jump  -> st.player.move.targetVelocity.yvel <- 5.
+  | Left  -> st.player.move.targetVelocity.xvel <- -0.4; st.player.isRight <- false
+  | Right -> st.player.move.targetVelocity.xvel <- 0.4;  st.player.isRight <- true
+  | Jump  ->
+    st.player.move.targetVelocity.yvel <- 0.5;
   | Nothing -> st.player.move.targetVelocity <- {xvel = 0.; yvel = 0.}
 
 (*let update_state (st:state) (i:input) : state =

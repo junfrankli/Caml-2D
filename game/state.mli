@@ -26,8 +26,6 @@ type tile =
   | Grass2
   | Blade
 
-type obj
-
 type input =
   | Left
   | Right
@@ -56,6 +54,13 @@ type movement = {
   mutable jump : int
 }
 
+type obj = {
+  size   : float * float;
+  move   : movement;
+  switch : pos list;
+  mutable isRight: bool
+}
+
 type state = {
   input  : int;
   player : obj;
@@ -70,3 +75,5 @@ val init_state : level -> state
 val reach_end : state -> bool
 
 val update_key : state -> input -> unit
+
+val update_player : state -> unit

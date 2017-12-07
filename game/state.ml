@@ -156,11 +156,14 @@ let rec narrow_phase lst state =
       | Stone2 | Snow2 | Cobble2 | Grass2 | Sand2   -> true
       | _ -> narrow_phase t state
 
+(*[cast_ftoi lst] takes a list of float pairs and returns a list of int pairs*)
 let rec cast_ftoi lst =
   match lst with
   | [] -> []
   | (k,v)::t -> (int_of_float k, int_of_float v) :: (cast_ftoi t)
 
+(*[update_movex s] updates the x-axis coordinates of the player based on the
+  current state.*)
   let update_movex s =
 
     let m = s.player.move in
@@ -172,7 +175,8 @@ let rec cast_ftoi lst =
     if m.loc.x > 20. then m.loc.x <- 20.
 
 
-
+(*[update_movey s] updates the y-axis coorindates of the player based on the
+  current state.*)
   let update_movey s =
 
     let m = s.player.move in
@@ -293,6 +297,8 @@ type input =
   | Jump
   | Nothing
 
+(*--Unused in final code--
+  updates the player object's move field based off of input*)
 let update_jumps i s =
   if s.player.move.jump = 0 then raise (NoJump "0 jumps")
   else
@@ -304,6 +310,9 @@ let has_jump s = if s.player.move.jump > 0 then true else false
 
 let pos_list = []
 
+(*[init_tile] takes a list of tiles and returns a list of tiles and their
+  locations except in types that we created. This allows us to better
+  manipulate the code when creating sprites.*)
 let rec init_tile lst acc =
   match lst with
   | [] -> acc
@@ -333,6 +342,9 @@ let rec init_tile lst acc =
     | "blade" -> init_tile l ((((s x),(t x)),Blade)::acc)
     | _ -> init_tile l (((s x,t x),Uspike)::acc)
     )
+
+(*[init_state level] creates an initial state given a specific starting [level]
+  to start at.*)
 let init_state level = {
   input     = 0;
   player    = {size = (0.75,0.75);
@@ -350,6 +362,8 @@ let init_state level = {
   count = 0
 }
 
+(*[reach_end state] checks if the current player has reached the end of the
+  level and is true if they have and false if not.*)
 let reach_end state =
   let lst = broad_phase state.player in
   let rec help lst state =
@@ -361,6 +375,8 @@ let reach_end state =
         | _ -> help t state in
   help lst state
 
+(*[update_key st i] updates the state [st] based off the input [i] given by
+  the user.*)
 let update_key st i =
   match i with
   | Left  -> st.player.move.targetVelocity.xvel <- -0.4; st.player.isRight <- false

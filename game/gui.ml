@@ -1,5 +1,6 @@
 open GMain
 open GdkKeysyms
+open State
 
 let locale = GtkMain.Main.init ()
 
@@ -157,10 +158,26 @@ let rec level n l window vbox st () =
     game#put bg#coerce 0 0;
   (* Display the windows and enter Gtk+ main loop *)
   window#show ();
+  let st = init_state l in
+  state_to_gui st.tile_locs n l window vbox game;
+  move st n l window vbox game
   Main.main ()
 
 (**)
 and move () = ()
+
+and state_to_gui (locs:((int*int)*tile) list) helper n l window vbox game=
+  match locs with
+  | [] -> ()
+  | ((x, y), Spike)::t ->
+    let obj = GMisc.image ~file:"../images/levels/spike.png" () in
+    game#put obj#coerce (50*x) (750-50*y);
+  | ((x, y), Ground)::t ->
+    let obj = GMisc.image ~file:"../images/levels/ground.png" () in
+    game#put obj#coerce (50*x) (750-50*y);
+  | ((x, y), Wall)::t ->
+    let obj = GMisc.image ~file:"../images/levels/wall.png" () in
+    game#put obj#coerce (50*x) (750-50*y);
 
 (**)
 and key_press s =

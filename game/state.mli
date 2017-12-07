@@ -1,10 +1,19 @@
-type level = {
-  l : int;
-  obj_list : (string*int*int) list;
-  start_pos : int*int;
-  exit : int*int;
-}
+open Level
 
-type state
+type tile =
+  | Spike
+  | Ground
+  | Wall
+
+type obj
+
+type state = {
+  input  : int;
+  player : obj;
+  in_air : bool;
+  lvl   : int;
+  tile_locs : ((int*int)*tile) list;
+  start: float * float;
+}
 
 val init_state : level -> state

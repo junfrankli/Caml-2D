@@ -1,10 +1,12 @@
 type level = {
+  l : int;
   obj_list : (string*int*int) list;
   start_pos : int*int;
   exit : int*int;
 }
 
 let level1 = {
+  l = 1;
   obj_list = [("ground",0,0);("ground",1,0);("ground",2,0);("ground",3,0);
               ("ground",4,0);("ground",5,0);("ground",6,0);("ground",7,0)
              ;("ground",8,0);("ground",9,0);("ground",10,0);("ground",11,0);("ground",12,0);
@@ -49,6 +51,7 @@ let level1 = {
 }
 
 let level2 = {
+  l=2;
   obj_list = [("uspike",0,0);("uspike",1,0);("uspike",2,0);("uspike",3,0);
               ("uspike",4,0);("uspike",5,0);("uspike",6,0);("uspike",7,0)
              ;("uspike",8,0);("uspike",9,0);("uspike",10,0);("uspike",11,0);("uspike",12,0);
@@ -91,6 +94,7 @@ let level2 = {
 }
 
 let level3 = {
+  l=3;
   obj_list = [("grass",0,0);("grass",1,0);("ground",2,0);("ground",3,0);
               ("uspike",4,0);("uspike",5,0);("uspike",6,0);("uspike",7,0)
              ;("uspike",8,0);("uspike",9,0);("ground",10,0);("ground",11,0);("ground",12,0);
@@ -119,6 +123,7 @@ let level3 = {
 }
 
 let level4 = {
+  l=4;
   obj_list = [("ground",0,0);("ground",1,0);("ground",2,0);("ground",3,0);
               ("ground",4,0);("ground",5,0);("ground",6,0);("ground",7,0)
              ;("ground",8,0);("ground",9,0);("ground",10,0);("ground",11,0);("ground",12,0);
@@ -184,6 +189,7 @@ let level4 = {
 }
 
 let level5 = {
+  l=5;
   obj_list = [("uspike",0,0);("uspike",1,0);("uspike",2,0);("uspike",3,0);
               ("uspike",4,0);("uspike",5,0);("uspike",6,0);("uspike",7,0)
              ;("uspike",8,0);("uspike",9,0);("uspike",10,0);("uspike",11,0);("uspike",12,0);
@@ -209,6 +215,7 @@ let level5 = {
 }
 
 let level6 = {
+  l=6;
   obj_list = [("fire",0,14);("fire",0,13);("fire",1,4);("fire",2,4);
              ("fire",3,4);("fire",4,4);];
   start_pos = (0,7);

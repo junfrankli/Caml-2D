@@ -45,12 +45,6 @@ type obj = {
   mutable isRight: bool
 }
 
-type level = {
-  l : int;
-  obj_list : (string*int*int) list;
-  start_pos : int*int;
-  exit : int*int;
-}
 
 type state = {
   input  : int;

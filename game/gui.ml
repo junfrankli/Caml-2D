@@ -169,7 +169,7 @@ and state_to_gui locs game=
   match locs with
   | [] -> ()
   | ((x,y), Spike)::t ->
-    let obj = GMisc.image ~file:"../images/tiles/spike.png" () in
+    let obj = GMisc.image ~file:"../images/tiles/spike_u.png" () in
     game#put obj#coerce (50*x) (750-50*y);
     state_to_gui t game;
   | ((x, y), Ground)::t ->

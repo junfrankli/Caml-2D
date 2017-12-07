@@ -54,7 +54,7 @@ type level = {
 }
 
 type state = {
-  input  : int;
+  input  : char;
   player : obj;
   in_air : bool;
   level  : int;
@@ -148,7 +148,7 @@ let update_jumps i s =
 let has_jump s = if s.player.move.jump > 0 then true else false
 
 let init_state l = {
-  input     = 0;
+  input     = ' ';
   player    = {etype = Being; size = (0.,0.);
                move = {
                  loc = {x = 0.; y=0.};

@@ -1,4 +1,5 @@
 open Graphics
+open State
 (*open Camlimages
 open Png*)
 open GMain
@@ -106,9 +107,9 @@ and key_press n l window vbox st () =
   if e.keypressed then clear_graph ();
   match e.key with
   | '\027' -> close_level l window vbox st ()
-  | 'w' -> moveto 500 300; draw_string "up"; game n l window vbox st ()
-  | 'a' -> moveto 300 100; draw_string "left"; game n l window vbox st ()
-  | 'd' -> moveto 700 100; draw_string "right"; game n l window vbox st ()
+  | 'w' -> moveto 500 300; draw_string "up"; game n l window vbox {st with input = 'w'} ()
+  | 'a' -> moveto 300 100; draw_string "left"; game n l window vbox {st with input = 'a'} ()
+  | 'd' -> moveto 700 100; draw_string "right"; game n l window vbox {st with input = 'd'} ()
   | _ -> clear_graph (); game n l window vbox st ()
 
 (**)
@@ -614,13 +615,14 @@ and menu l window vbox st () =
     Main.main ()
 
 (**)
-let main l () =
+let main l st () =
   let window = GWindow.window ~width:999 ~height:750
       ~title:"Caml 2D" ~show:true () in
   window#connect#destroy ~callback:Main.quit;
   let vbox = GPack.vbox ~packing:window#add () in
-  let st = () in
   menu l window vbox st ()
 
+let i = init_state 15
+
 (**)
-let () = main 15 ()
+let () = main 15 i ()

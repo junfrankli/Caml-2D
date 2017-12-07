@@ -334,6 +334,7 @@ let level9 = {
               ("cobble1",10,0);("fire",10,1);
               ("cobble1",11,0);("fire",11,1);("fire",11,7);("fire",11,8);
               ("cobble1",11,9);("cobble1",11,10);("cobble1",11,11);("cobble1",11,12);
+              ("blade",11,13);("blade",11,14);
               ("cobble1",12,0);("cobble1",12,1);("cobble1",12,2);("cobble1",12,3);
               ("fire",13,0);("fire",13,1);
               ("fire",14,0);("fire",14,1);

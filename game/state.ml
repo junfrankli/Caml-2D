@@ -196,7 +196,7 @@ type input =
   | Left
   | Right
   | Jump
-  | Shoot
+  | Nothing
 
 let update_jumps i s =
   if s.player.move.jump = 0 then raise (NoJump "0 jumps")
@@ -251,8 +251,12 @@ let reach_end state =
         | _ -> help t state in
   help lst state
 
-let update_key st k =
-  {st with input = k}
+let update_key st i =
+  match i with
+  | Left  -> st.player.move.targetVelocity.xvel <- -1.; st.player.isRight <- false
+  | Right -> st.player.move.targetVelocity.xvel <- 1.;  st.player.isRight <- true
+  | Jump  -> st.player.move.targetVelocity.yvel <- 5.
+  | Nothing -> st.player.move.targetVelocity <- {xvel = 0.; yvel = 0.}
 
 (*let update_state (st:state) (i:input) : state =
   match i with

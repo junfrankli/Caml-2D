@@ -115,7 +115,7 @@ let bg_img n =
   | _ -> GMisc.image ~file:"../images/levels/bg15.png" ()
 
 (**)
-let rec init_level (n:int) (l:int) window vbox st () =
+let rec init_level (n:int) (l:int) window vbox () =
   window#remove vbox#coerce;
   let vbox = GPack.vbox ~packing:window#add () in
   (* Menu bar *)
@@ -130,52 +130,24 @@ let rec init_level (n:int) (l:int) window vbox st () =
   ignore (window#event#connect#key_press ~callback:(key_press));
   (* Game Space *)
   let game = GPack.fixed ~width:999 ~height:750 ~packing:vbox#add () in
+  let bg =
   match n with
-  | 1 ->
-    let bg = bg_img 1 in
-    game#put bg#coerce 0 0;
-  | 2 ->
-    let bg = bg_img 2 in
-    game#put bg#coerce 0 0;
-  | 3 ->
-    let bg = bg_img 3 in
-    game#put bg#coerce 0 0;
-  | 4 ->
-    let bg = bg_img 4 in
-    game#put bg#coerce 0 0;
-  | 5 ->
-    let bg = bg_img 5 in
-    game#put bg#coerce 0 0;
-  | 6 ->
-    let bg = bg_img 6 in
-    game#put bg#coerce 0 0;
-  | 7 ->
-    let bg = bg_img 7 in
-    game#put bg#coerce 0 0;
-  | 8 ->
-    let bg = bg_img 8 in
-    game#put bg#coerce 0 0;
-  | 9 ->
-    let bg = bg_img 9 in
-    game#put bg#coerce 0 0;
-  | 10 ->
-    let bg = bg_img 10 in
-    game#put bg#coerce 0 0;
-  | 11 ->
-    let bg = bg_img 11 in
-    game#put bg#coerce 0 0;
-  | 12 ->
-    let bg = bg_img 12 in
-    game#put bg#coerce 0 0;
-  | 13 ->
-    let bg = bg_img 13 in
-    game#put bg#coerce 0 0;
-  | 14 ->
-    let bg = bg_img 14 in
-    game#put bg#coerce 0 0;
-  | _ ->
-    let bg = bg_img 15 in
-    game#put bg#coerce 0 0;
+  | 1 -> bg_img 1
+  | 2 -> bg_img 2
+  | 3 -> bg_img 3
+  | 4 -> bg_img 4
+  | 5 -> bg_img 5
+  | 6 -> bg_img 6
+  | 7 -> bg_img 7
+  | 8 -> bg_img 8
+  | 9 -> bg_img 9
+  | 10 -> bg_img 10
+  | 11 -> bg_img 11
+  | 12 -> bg_img 12
+  | 13 -> bg_img 13
+  | 14 -> bg_img 14
+  | _ -> bg_img 15 in
+  game#put bg#coerce 0 0;
   (* Display the windows and enter Gtk+ main loop *)
   let lev l =
     match l with
@@ -189,7 +161,7 @@ let rec init_level (n:int) (l:int) window vbox st () =
   state_to_gui st n l window vbox game;
   move st n l window vbox game;
   window#show ();
-(*Main.main ()*)
+  Main.main ()
 
 (**)
 and move st n l window vbox game = ()
@@ -211,8 +183,9 @@ and state_to_gui st (n:int) (l:int) window vbox game=
 and key_press s =
   let key = GdkEvent.Key.keyval s in
   match key with
-  | 65362 (*up key*) -> exit 0; true
-  | _ -> (); true
+  | 119 (* W *) -> Jump
+  | 97 (* A *) -> Left
+  | 100 (* D *) -> Right
 
 (**)
 and menu l window vbox ():unit =
@@ -833,7 +806,6 @@ let main (l:int) () =
   window#connect#destroy ~callback:Main.quit;
   let vbox = GPack.vbox ~packing:window#add () in
   menu l window vbox ()
-
 
 (**)
 let () = main 15 ()

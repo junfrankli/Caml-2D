@@ -215,9 +215,17 @@ let level5 = {
 }
 
 let level6 = {
-  l=6;
   obj_list = [("fire",0,14);("fire",0,13);("fire",1,4);("fire",2,4);
-             ("fire",3,4);("fire",4,4);];
+              ("fire",3,4);("fire",4,4);("fire",4,5);("fire",1,5);("grass",1,6);
+              ("grass",0,6);("grass",4,6);("fire",2,8);("grass",2,9)
+             ;("grass",1,9);("grass",0,9);("grass",4,12);("grass",5,12)
+             ;("fire",6,12);("fire",3,12);("ground",5,11);("ground",5,10)
+             ;("ground",5,9);("ground",5,8);("ground",5,7);("ground",5,6)
+             ;("grass",5,4);("grass",6,4);("grass",7,4);("fire",8,4)
+             ;("fire",6,7);("fire",7,8);("fire",8,9);("fire",8,10);("fire",7,11)
+             ;("fire",9,5);("fire",10,6);("fire",11,7);("fire",12,8);("fire",12,9)
+             ;("fire",12,10);("fire",12,11);("fire",11,12);("fire",10,13)
+             ;("fire",9,14)];
   start_pos = (0,7);
   exit = (5,5)
 }

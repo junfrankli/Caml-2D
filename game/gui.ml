@@ -1,6 +1,6 @@
+open State
 open GMain
 open GdkKeysyms
-open State
 
 let locale = GtkMain.Main.init ()
 
@@ -109,7 +109,7 @@ let rec level n l window vbox st () =
   (* Event Box: test key press *)
   ignore (window#event#connect#key_press ~callback:((key_press)));
   (* Game Space *)
-  let game = GPack.fixed ~width:999 ~height:700 ~packing:vbox#add () in
+  let game = GPack.fixed ~width:999 ~height:750 ~packing:vbox#add () in
   match n with
   | 1 ->
     let bg = GMisc.image ~file:"../images/levels/bg1.png" () in
@@ -159,24 +159,24 @@ let rec level n l window vbox st () =
   (* Display the windows and enter Gtk+ main loop *)
   window#show ();
   let st = init_state l in
-  state_to_gui st.tile_locs n l window vbox game;
+  state_to_gui st. n l window vbox game;
   move st n l window vbox game
-  Main.main ()
+  (*Main.main ()*)
 
 (**)
-and move () = ()
+and move st n l window vbox game = ()
 
-and state_to_gui (locs:((int*int)*tile) list) helper n l window vbox game=
+and state_to_gui locs n l window vbox game=
   match locs with
   | [] -> ()
-  | ((x, y), Spike)::t ->
-    let obj = GMisc.image ~file:"../images/levels/spike.png" () in
+  | h::t ->
+    let obj = GMisc.image ~file:"../images/tiles/spike.png" () in
     game#put obj#coerce (50*x) (750-50*y);
   | ((x, y), Ground)::t ->
-    let obj = GMisc.image ~file:"../images/levels/ground.png" () in
+    let obj = GMisc.image ~file:"../images/tiles/stone1.png" () in
     game#put obj#coerce (50*x) (750-50*y);
   | ((x, y), Wall)::t ->
-    let obj = GMisc.image ~file:"../images/levels/wall.png" () in
+    let obj = GMisc.image ~file:"../images/tiles/stone2.png" () in
     game#put obj#coerce (50*x) (750-50*y);
 
 (**)

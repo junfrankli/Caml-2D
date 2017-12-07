@@ -170,15 +170,15 @@ and state_to_gui locs game=
   | [] -> ()
   | ((x,y), Spike)::t ->
     let obj = GMisc.image ~file:"../images/tiles/spike_u.png" () in
-    game#put obj#coerce (50*x) (750-50*y);
+    game#put obj#coerce (50*x) (700-50*y);
     state_to_gui t game;
   | ((x, y), Ground)::t ->
     let obj = GMisc.image ~file:"../images/tiles/stone1.png" () in
-    game#put obj#coerce (50*x) (750-50*y);
+    game#put obj#coerce (50*x) (700-50*y);
     state_to_gui t game;
   | ((x, y), Wall)::t ->
     let obj = GMisc.image ~file:"../images/tiles/stone2.png" () in
-    game#put obj#coerce (50*x) (750-50*y);
+    game#put obj#coerce (50*x) (700-50*y);
     state_to_gui t game;
 
 (**)

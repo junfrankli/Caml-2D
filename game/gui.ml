@@ -128,157 +128,69 @@ let rec init_level (n:int) (l:int) window vbox () =
   ignore (back#event#connect#button_press ~callback:(fun x -> menu l window vbox (); true));
   (* Game Space *)
   let game = GPack.fixed ~width:999 ~height:750 ~packing:vbox#add () in
-  match n with
-  | 1 ->
-    let bg = bg_img 1 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level1) in
-    state_to_gui st.tile_locs game;
-    window#show ();
-    loop n l window vbox st game p ();
-    Main.main ()
-  | 2 ->
-    let bg = bg_img 2 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level2) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | 3 ->
-    let bg = bg_img 3 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level3) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | 4 ->
-    let bg = bg_img 4 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level4) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | 5 ->
-    let bg = bg_img 5 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level5) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | 6 ->
-    let bg = bg_img 6 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level6) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | 7 ->
-    let bg = bg_img 7 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level6) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | 8 ->
-    let bg = bg_img 8 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level6) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | 9 ->
-    let bg = bg_img 9 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level6) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | 10 ->
-    let bg = bg_img 10 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level6) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | 11 ->
-    let bg = bg_img 11 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level6) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | 12 ->
-    let bg = bg_img 12 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level6) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | 13 ->
-    let bg = bg_img 13 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level6) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | 14 ->
-    let bg = bg_img 14 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level6) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
-  | _ ->
-    let bg = bg_img 15 in game#put bg#coerce 0 0;
-    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
-    let x = 3 in let y =2 in
-    game#put p#coerce (50*x) (712-50*y);
-    let st:state = init_state (level6) in
-    state_to_gui st.tile_locs game;
-    loop n l window vbox st game p ();
-    window#show ();
-    Main.main ()
+  (* Background *)
+  let bg =
+    match n with
+    | 1 -> bg_img 1
+    | 2 -> bg_img 2
+    | 3 -> bg_img 3
+    | 4 -> bg_img 4
+    | 5 -> bg_img 5
+    | 6 -> bg_img 6
+    | 7 -> bg_img 7
+    | 8 -> bg_img 8
+    | 9 -> bg_img 9
+    | 10 -> bg_img 10
+    | 11 -> bg_img 11
+    | 12 -> bg_img 12
+    | 13 -> bg_img 13
+    | 14 -> bg_img 14
+    | _ -> bg_img 15 in
+  game#put bg#coerce 0 0;
+  (* Player *)
+  let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+  let tup =
+    match n with
+    | 1 -> (3,2)
+    | 2 -> (0,4)
+    | 3 -> (0,1)
+    | 4 -> (0,13)
+    | 5 -> (0,9)
+    | 6 -> (0,7)
+    | 7 -> (3,2)
+    | 8 -> (19,9)
+    | 9 -> (0,12)
+    | 10 -> (3,2)
+    | 11 -> (3,2)
+    | 12 -> (3,2)
+    | 13 -> (3,2)
+    | 14 -> (3,2)
+    | _ -> (3,2) in
+  let x = fst tup in let y = snd tup in
+  game#put p#coerce (50*x) (712-50*y);
+  (* State *)
+  let lev =
+    match n with
+    | 1 -> level1
+    | 2 -> level2
+    | 3 -> level3
+    | 4 -> level4
+    | 5 -> level5
+    | 6 -> level6
+    | 7 -> level6
+    | 8 -> level6
+    | 9 -> level6
+    | 10 -> level6
+    | 11 -> level6
+    | 12 -> level6
+    | 13 -> level6
+    | 14 -> level6
+    | _ -> level6 in
+  let st:state = init_state (lev) in
+  state_to_gui st.tile_locs game;
+  window#show ();
+  loop n l window vbox st game p ();
+  Main.main ()
 
 (**)
 and loop n l window vbox st game p () =

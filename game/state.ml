@@ -273,7 +273,7 @@ let init_state level = {
                }; switch = []; isRight = true};
   in_air    = false;
   lvl       = level.l;
-  tile_locs = init_tile level.obj_list [];
+  tile_locs = (level.exit, GGEZ)::(init_tile level.obj_list []);
   start     = (0.,0.)
 }
 

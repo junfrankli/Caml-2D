@@ -128,44 +128,174 @@ let rec init_level (n:int) (l:int) window vbox () =
   ignore (back#event#connect#button_press ~callback:(fun x -> menu l window vbox (); true));
   (* Game Space *)
   let game = GPack.fixed ~width:999 ~height:750 ~packing:vbox#add () in
-  let bg =
   match n with
-  | 1 -> bg_img 1
-  | 2 -> bg_img 2
-  | 3 -> bg_img 3
-  | 4 -> bg_img 4
-  | 5 -> bg_img 5
-  | 6 -> bg_img 6
-  | 7 -> bg_img 7
-  | 8 -> bg_img 8
-  | 9 -> bg_img 9
-  | 10 -> bg_img 10
-  | 11 -> bg_img 11
-  | 12 -> bg_img 12
-  | 13 -> bg_img 13
-  | 14 -> bg_img 14
-  | _ -> bg_img 15 in
-  game#put bg#coerce 0 0;
-  (* Display the windows and enter Gtk+ main loop *)
-  let lev l =
-    match l with
-    | 1 -> level1
-    | 2 -> level2
-    | 3 -> level3
-    | 4 -> level4
-    | 5 -> level5
-    | _ -> level6 in
-  let st:state = init_state (lev n) in
-  (* Event Box: detect key press *)
-  ignore (window#event#connect#key_press ~callback:(key_press st n l window vbox game));
-  state_to_gui st.tile_locs game;
-  window#show ();
-  Main.main ()
+  | 1 ->
+    let bg = bg_img 1 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level1) in
+    state_to_gui st.tile_locs game;
+    window#show ();
+    loop n l window vbox st game p ();
+    Main.main ()
+  | 2 ->
+    let bg = bg_img 2 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level2) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | 3 ->
+    let bg = bg_img 3 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level3) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | 4 ->
+    let bg = bg_img 4 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level4) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | 5 ->
+    let bg = bg_img 5 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level5) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | 6 ->
+    let bg = bg_img 6 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level6) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | 7 ->
+    let bg = bg_img 7 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level6) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | 8 ->
+    let bg = bg_img 8 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level6) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | 9 ->
+    let bg = bg_img 9 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level6) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | 10 ->
+    let bg = bg_img 10 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level6) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | 11 ->
+    let bg = bg_img 11 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level6) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | 12 ->
+    let bg = bg_img 12 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level6) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | 13 ->
+    let bg = bg_img 13 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level6) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | 14 ->
+    let bg = bg_img 14 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level6) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
+  | _ ->
+    let bg = bg_img 15 in game#put bg#coerce 0 0;
+    let p = GMisc.image ~file:"../images/tiles/ocaml.png" () in
+    let x = 3 in let y =2 in
+    game#put p#coerce (50*x) (712-50*y);
+    let st:state = init_state (level6) in
+    state_to_gui st.tile_locs game;
+    loop n l window vbox st game p ();
+    window#show ();
+    Main.main ()
 
 (**)
-and move key st n l window vbox game () = ()
+and loop n l window vbox st game p () =
+  (* Event Box: detect key press *)
+  ignore (window#event#connect#key_press ~callback:(key_press st));
+  (*let timer = Unix.time () in
+  update_player st.player st;
+  game#move p#coerce (int_of_float (50.*.(st.player.move.loc.x-.0.375)))
+    (int_of_float (712.-.50.*.(st.player.move.loc.y-.0.375)));
+  let time_elapsed = Unix.time() -. timer in
+  let sleep_time = if ((1.0/. 30.) -. time_elapsed) > 0.0
+    then ((1.0/.30.)-.time_elapsed) else 0.0 in
+  Unix.sleepf 3.;
+    loop n l window vbox st game p ();*)
 
-and state_to_gui locs game=
+(**)
+and state_to_gui locs game =
   match locs with
   | [] -> ()
   | ((x, y), GGEZ)::t ->
@@ -265,14 +395,14 @@ and state_to_gui locs game=
     game#put obj#coerce (50*x) (700-50*y);
     state_to_gui t game;
 
-    (**)
-and key_press st n l window vbox game s =
+(**)
+and key_press st s =
   print_endline "key pressed";
   let key = GdkEvent.Key.keyval s in
   match key with
-  | 119 (* W *) -> update_key st Jump; move Jump st n l window vbox game (); exit 0; true
-  | 97 (* A *) -> update_key st Left; move Left st n l window vbox game (); exit 0; true
-  | 100 (* D *) -> update_key st Right; move Right st n l window vbox game (); exit 0; true
+  | 119 (* W *) -> update_key st Jump; true
+  | 97 (* A *) -> update_key st Left; true
+  | 100 (* D *) -> update_key st Right; true
   | _ -> (); true
 
 (**)

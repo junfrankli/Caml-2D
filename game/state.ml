@@ -31,13 +31,31 @@ type movement = {
   mutable jump : int
 }
 
-
-
 type tile =
-  | Spike
-  | Ground
-  | Wall
   | GGEZ
+  | Cobble1
+  | Cobble2
+  | Sand1
+  | Sand2
+  | Uspike
+  | Lspike
+  | Rspike
+  | Dspike
+  | Uspike_t
+  | Uspike_b
+  | Dspike_t
+  | Dspike_b
+  | Rspike_l
+  | Rspike_r
+  | Lspike_l
+  | Lspike_r
+  | Stone1
+  | Stone2
+  | Snow1
+  | Snow2
+  | Grass1
+  | Grass2
+  | Blade
 
 type obj = {
   size   : float * float;
@@ -123,7 +141,8 @@ let rec killed lst state =
   | [] -> false
   | (k,v)::t -> if not (List.mem_assoc ((k,v)) state.tile_locs) then killed t state else
       match List.assoc (k,v) state.tile_locs with
-      | Spike -> true
+      | Uspike | Lspike | Rspike | Dspike | Uspike_t | Uspike_b | Blade
+      | Dspike_t | Dspike_b | Rspike_r | Rspike_l | Lspike_l | Lspike_r -> true
       | _ -> killed t state
 (*[narrow_phase] checks for collisions and mutates the player movement parameters
   accordingly given [lst] of tile intersections*)
@@ -132,8 +151,8 @@ let rec narrow_phase lst state =
   | [] -> false
   | (k,v)::t -> if not (List.mem_assoc ((k,v)) state.tile_locs) then narrow_phase t state else
       match List.assoc (k,v) state.tile_locs with
-      | Ground -> true
-      | Wall   -> true
+      | Stone1 | Snow1 | Cobble1 | Grass1 | Sand1 -> true
+      | Stone2 | Snow2 | Cobble2 | Grass2 | Sand2   -> true
       | _ -> narrow_phase t state
 
 let rec cast_ftoi lst =

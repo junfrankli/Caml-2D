@@ -1,10 +1,30 @@
 open Level
 
 type tile =
-  | Spike
-  | Ground
-  | Wall
   | GGEZ
+  | Cobble1
+  | Cobble2
+  | Sand1
+  | Sand2
+  | Uspike
+  | Lspike
+  | Rspike
+  | Dspike
+  | Uspike_t
+  | Uspike_b
+  | Dspike_t
+  | Dspike_b
+  | Rspike_l
+  | Rspike_r
+  | Lspike_l
+  | Lspike_r
+  | Stone1
+  | Stone2
+  | Snow1
+  | Snow2
+  | Grass1
+  | Grass2
+  | Blade
 
 type obj
 

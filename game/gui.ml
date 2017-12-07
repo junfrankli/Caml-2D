@@ -168,20 +168,104 @@ and move key st n l window vbox game () = ()
 and state_to_gui locs game=
   match locs with
   | [] -> ()
-  | ((x,y), Spike)::t ->
+  | ((x, y), GGEZ)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/exit.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x, y), Cobble1)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/cobble1.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x, y), Cobble2)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/cobble2.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x, y), Sand1)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/sand1.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x, y), Sand2)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/sand2.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x,y), Uspike)::t ->
     let obj = GMisc.image ~file:"../images/tiles/spike_u.png" () in
     game#put obj#coerce (50*x) (700-50*y);
     state_to_gui t game;
-  | ((x, y), Ground)::t ->
+  | ((x,y), Lspike)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/spike_l.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x,y), Rspike)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/spike_r.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x,y), Dspike)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/spike_d.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x,y), Uspike_t)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/spike_u1.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x,y), Uspike_b)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/spike_u2.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x,y), Dspike_t)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/spike_d1.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x,y), Dspike_b)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/spike_d2.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x,y), Lspike_l)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/spike_l1.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x,y), Lspike_r)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/spike_l2.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x,y), Rspike_l)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/spike_r2.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x,y), Rspike_r)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/spike_r1.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x, y), Stone1)::t ->
     let obj = GMisc.image ~file:"../images/tiles/stone1.png" () in
     game#put obj#coerce (50*x) (700-50*y);
     state_to_gui t game;
-  | ((x, y), Wall)::t ->
+  | ((x, y), Stone2)::t ->
     let obj = GMisc.image ~file:"../images/tiles/stone2.png" () in
     game#put obj#coerce (50*x) (700-50*y);
     state_to_gui t game;
+  | ((x, y), Snow1)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/snow1.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x, y), Snow2)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/snow2.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x, y), Grass1)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/grass1.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x, y), Grass2)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/grass2.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
+  | ((x, y), Blade)::t ->
+    let obj = GMisc.image ~file:"../images/tiles/blade.png" () in
+    game#put obj#coerce (50*x) (700-50*y);
+    state_to_gui t game;
 
-(**)
+    (**)
 and key_press st n l window vbox game s =
   print_endline "key pressed";
   let key = GdkEvent.Key.keyval s in

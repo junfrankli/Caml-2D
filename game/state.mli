@@ -6,14 +6,14 @@ type input
 
 type level
 
+type tile
+
 type state = {
-  input  : char;
+  input  : int;
   player : obj;
   in_air : bool;
   level  : int;
-  completed : int list;
-  positions : (obj * pos) list;
-  game_over : bool;
+  tile_locs : ((int*int)*tile) list;
 }
 
 val update_jumps : input -> state -> unit

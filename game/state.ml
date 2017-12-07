@@ -212,14 +212,14 @@ let pos_list = []
 let rec init_tile lst acc =
   match lst with
   | [] -> acc
-  | (k,v,l)::t -> (match k with
-      | "uspike" -> init_tile t (((v,l),Spike)::acc)
-      | "dspike" -> init_tile t (((v,l),Spike)::acc)
-      | "lspike" -> init_tile t (((v,l),Spike)::acc)
-      | "rspike" -> init_tile t (((v,l),Spike)::acc)
-      | "ground" -> init_tile t (((v,l),Wall)::acc)
-      | "grass" -> init_tile t (((v,l),Ground)::acc)
-      | _ -> init_tile t (((v,l),Ground)::acc)
+  | x::l -> (match f x with
+      | "uspike" -> init_tile l ((((s x),(t x)),Spike)::acc)
+      | "dspike" -> init_tile l (((s x,t x),Spike)::acc)
+      | "lspike" -> init_tile l (((s x,t x),Spike)::acc)
+      | "rspike" -> init_tile l (((s x,t x),Spike)::acc)
+      | "ground" -> init_tile l (((s x,t x),Wall)::acc)
+      | "grass" -> init_tile l (((s x,t x),Ground)::acc)
+      | _ -> init_tile l (((s x,t x),Spike)::acc)
     )
 let init_state level = {
   input     = 0;

@@ -109,6 +109,7 @@ let rec game n l window vbox st bg () =
   Graphics.draw_image (Graphics.make_image bg) 0 0;
   Graphics.draw_image (Graphics.make_image player_img) (int_of_float (50.*.(st.player.move.loc.x-.0.375)))
     (int_of_float (50.*.(st.player.move.loc.y-.0.375)));
+  st.count <- st.count-1;
 
   game n l window vbox st bg ();
 
@@ -179,43 +180,43 @@ and open_level n l window vbox () =
     Graphics.draw_image (Graphics.make_image player_img) (50*0) (50*12);
     game n l window vbox st bg ()
   | 9 ->
-    let st = init_state level1 in
+    let st = init_state level9 in
     let bg = Png.load_as_rgb24 "../images/levels/bg9.png" [] |> Graphic_image.array_of_image in
     Graphics.draw_image (Graphics.make_image bg) 0 0;
-    Graphics.draw_image (Graphics.make_image player_img) (50*3) (50*2);
+    Graphics.draw_image (Graphics.make_image player_img) (50*9) (50*14);
     game n l window vbox st bg ()
   | 10 ->
-    let st = init_state level1 in
+    let st = init_state level10 in
     let bg = Png.load_as_rgb24 "../images/levels/bg10.png" [] |> Graphic_image.array_of_image in
     Graphics.draw_image (Graphics.make_image bg) 0 0;
-    Graphics.draw_image (Graphics.make_image player_img) (50*3) (50*2);
+    Graphics.draw_image (Graphics.make_image player_img) (50*0) (50*13);
     game n l window vbox st bg ()
   | 11 ->
-    let st = init_state level1 in
+    let st = init_state level11 in
     let bg = Png.load_as_rgb24 "../images/levels/bg11.png" [] |> Graphic_image.array_of_image in
     Graphics.draw_image (Graphics.make_image bg) 0 0;
-    Graphics.draw_image (Graphics.make_image player_img) (50*3) (50*2);
+    Graphics.draw_image (Graphics.make_image player_img) (50*9) (50*1);
     game n l window vbox st bg ()
   | 12 ->
-    let st = init_state level1 in
+    let st = init_state level12 in
     let bg = Png.load_as_rgb24 "../images/levels/bg12.png" [] |> Graphic_image.array_of_image in
     Graphics.draw_image (Graphics.make_image bg) 0 0;
-    Graphics.draw_image (Graphics.make_image player_img) (50*3) (50*2);
+    Graphics.draw_image (Graphics.make_image player_img) (50*0) (50*1);
     game n l window vbox st bg ()
   | 13 ->
-    let st = init_state level1 in
+    let st = init_state level13 in
     let bg = Png.load_as_rgb24 "../images/levels/bg13.png" [] |> Graphic_image.array_of_image in
     Graphics.draw_image (Graphics.make_image bg) 0 0;
-    Graphics.draw_image (Graphics.make_image player_img) (50*3) (50*2);
+    Graphics.draw_image (Graphics.make_image player_img) (50*0) (50*7);
     game n l window vbox st bg ()
   | 14 ->
-    let st = init_state level1 in
+    let st = init_state level14 in
     let bg = Png.load_as_rgb24 "../images/levels/bg14.png" [] |> Graphic_image.array_of_image in
     Graphics.draw_image (Graphics.make_image bg) 0 0;
-    Graphics.draw_image (Graphics.make_image player_img) (50*3) (50*2);
+    Graphics.draw_image (Graphics.make_image player_img) (50*0) (50*1);
     game n l window vbox st bg ()
   | _ ->
-    let st = init_state level1 in
+    let st = init_state level15 in
     let bg = Png.load_as_rgb24 "../images/levels/bg15.png" [] |> Graphic_image.array_of_image in
     Graphics.draw_image (Graphics.make_image bg) 0 0;
     Graphics.draw_image (Graphics.make_image player_img) (50*3) (50*2);

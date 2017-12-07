@@ -309,3 +309,178 @@ let level8 = {
   start_pos = (0,12);
   exit = (19,1)
 }
+
+let level9 = {
+  l = 9;
+  obj_list = [("cobble1",1,0);("cobble1",1,1);("cobble1",1,2);("cobble1",1,3);
+              ("cobble1",1,4);("cobble1",1,5);("cobble1",1,6);("cobble1",1,7);
+              ("cobble1",1,8);("cobble1",1,9);("cobble1",1,10);
+              ("cobble1",2,0);("fire",2,1);("fire",2,2);("fire",2,3);
+              ("fire",2,4);("fire",2,5);("fire",2,6);("fire",2,7);
+              ("fire",2,8);("cobble1",2,9);("cobble1",2,10);("cobble1",2,11);
+              ("cobble1",3,0);("fire",3,1);("fire",3,9);
+              ("cobble1",3,10);("cobble1",3,11);("cobble1",3,12);
+              ("cobble1",4,0);("fire",4,1);("cobble1",4,3);("fire",4,10);
+              ("cobble1",4,11);("cobble1",4,12);("cobble1",4,13);
+              ("cobble1",5,0);("fire",5,1);("cobble1",5,3);("fire",5,11);
+              ("cobble1",5,12);("cobble1",5,13);("cobble1",5,14);
+              ("cobble1",6,0);("fire",6,1);
+              ("cobble1",7,0);("fire",7,1);("cobble1",7,6);("cobble1",7,7);
+              ("cobble1",7,12);("cobble1",7,13);("cobble1",7,14);
+              ("cobble1",8,0);("fire",8,1);("fire",8,8);("fire",8,9);
+              ("cobble1",9,0);("cobble1",9,1);("cobble1",9,2);("cobble1",9,3);
+              ("cobble1",9,8);("cobble1",9,9);("cobble1",9,10);
+              ("cobble1",9,11);("cobble1",9,12);("cobble1",9,13);
+              ("cobble1",10,0);("fire",10,1);
+              ("cobble1",11,0);("fire",11,1);("fire",11,7);("fire",11,8);
+              ("cobble1",11,9);("cobble1",11,10);("cobble1",11,11);("cobble1",11,12);
+              ("cobble1",12,0);("cobble1",12,1);("cobble1",12,2);("cobble1",12,3);
+              ("fire",13,0);("fire",13,1);
+              ("fire",14,0);("fire",14,1);
+              ("fire",15,0);
+              ("fire",16,0);
+              ("cobble1",17,0);
+              ("cobble1",18,0);("cobble1",18,1);("cobble1",18,2);("cobble1",18,3);];
+  start_pos = (9,14);
+  exit = (18,1)
+}
+
+let level10 = {
+  l = 10;
+  obj_list = [("blade",0,0);("sand2",0,12);
+              ("blade",1,0);("sand2",1,12);
+              ("blade",2,0);("sand2",2,7);("sand2",2,12);
+              ("blade",3,0);("sand2",3,3);("sand2",3,7);("sand2",3,12);
+              ("blade",4,0);("sand2",4,3);("sand2",4,7);("sand2",4,12);
+              ("blade",5,0);("sand2",5,3);("sand2",5,7);("sand2",5,12);
+              ("blade",6,0);("sand2",6,3);("sand2",6,7);("sand2",6,12);
+              ("blade",7,0);("blade",7,3);("blade",7,4);("blade",7,5);
+              ("blade",7,6);("blade",7,7);("sand2",7,12);
+              ("blade",8,0);("sand2",8,12);
+              ("blade",9,0);("blade",10,0);];
+  start_pos = (0,13);
+  exit = (6,4)
+}
+
+let level11 = {
+  l = 11;
+  obj_list = [("sand1",7,0);("sand1",8,0);("sand1",9,0);("sand1",10,0);
+              ("grass1",7,3);("grass1",8,3);("grass1",9,3);("grass1",10,3);
+              ("grass2",7,6);("grass2",8,6);("grass2",9,6);("grass2",10,6);
+              ("cobble1",7,9);("cobble1",8,9);("cobble1",9,9);("cobble1",10,9);
+              ("sand2",7,12);("sand2",8,12);("sand2",9,12);("sand2",10,12);
+              ("fire",1,0);
+              ("fire",2,0);
+              ("fire",3,0);
+              ("fire",4,0);
+              ("fire",5,0);
+              ("fire",6,0);
+              ("fire",11,0);
+              ("fire",12,0);
+              ("fire",13,0);
+              ("fire",14,0);
+              ("fire",15,0);
+              ("fire",16,0);
+              ("fire",17,0);
+              ("fire",18,0);
+              ("fire",19,0)];
+  start_pos = (9,1);
+  exit = (8,13);
+}
+
+let level12 = {
+  l = 12;
+  obj_list = [("cobble1",0,0);("cobble1",5,3);("cobble1",10,6);("cobble1",15,9);
+              ("cobble1",19,13);
+              ("uspike",1,0);
+              ("uspike",2,0);
+              ("uspike",3,0);
+              ("uspike",4,0);
+              ("uspike",5,0);
+              ("uspike",6,0);
+              ("uspike",7,0);
+              ("uspike",8,0);
+              ("uspike",9,0);
+              ("uspike",10,0);
+              ("uspike",11,0);
+              ("uspike",12,0);
+              ("uspike",13,0);
+              ("uspike",14,0);
+              ("uspike",15,0);
+              ("uspike",16,0);
+              ("uspike",17,0);
+              ("uspike",18,0);
+              ("uspike",19,0)];
+  start_pos = (0,1);
+  exit = (19,14);
+}
+
+let level13 = {
+  l = 13;
+  obj_list = [("cobble2",0,6);("cobble2",1,6);("cobble2",2,6);("cobble2",7,6);
+              ("cobble2",8,6);("cobble2",9,6);("cobble2",10,6);("cobble2",11,6);
+              ("cobble2",12,6);("cobble2",13,6);("cobble2",14,6);("cobble2",15,6);
+              ("cobble2",16,6);("cobble2",17,6);("cobble2",18,6);("cobble2",19,6);
+              ("cobble2",0,10);("cobble2",1,10);("cobble2",2,10);("cobble2",3,10);
+              ("cobble2",4,10);("cobble2",5,10);("cobble2",6,10);("cobble2",7,10);
+              ("cobble2",8,10);("cobble2",9,10);("cobble2",10,10);("cobble2",11,10);
+              ("cobble2",12,10);("cobble2",17,10);("cobble2",18,10);("cobble2",19,10);
+              ("blade",3,9);("blade",4,9);("blade",5,9);("blade",6,9);
+              ("blade",13,7);("blade",14,7);("blade",15,7);("blade",16,7);
+              ("uspike",1,0);
+              ("uspike",2,0);
+              ("uspike",3,0);
+              ("uspike",4,0);
+              ("uspike",5,0);
+              ("uspike",6,0);
+              ("uspike",7,0);
+              ("uspike",8,0);
+              ("uspike",9,0);
+              ("uspike",10,0);
+              ("uspike",11,0);
+              ("uspike",12,0);
+              ("uspike",13,0);
+              ("uspike",14,0);
+              ("uspike",15,0);
+              ("uspike",16,0);
+              ("uspike",17,0);
+              ("uspike",18,0);
+              ("uspike",19,0)];
+  start_pos = (0,7);
+  exit = (19,6)
+}
+
+let level14 = {
+  l = 14;
+  obj_list = [("grass2",0,0);("grass2",19,0);
+              ("cobble2",5,5); ("cobbl2",7,10);
+              ("sand2",10,5); ("sand2",12,10);
+              ("uspike",1,0);
+              ("uspike",2,0);
+              ("uspike",3,0);
+              ("uspike",4,0);
+              ("uspike",5,0);
+              ("uspike",6,0);
+              ("uspike",7,0);
+              ("uspike",8,0);
+              ("uspike",9,0);
+              ("uspike",10,0);
+              ("uspike",11,0);
+              ("uspike",12,0);
+              ("uspike",13,0);
+              ("uspike",14,0);
+              ("uspike",15,0);
+              ("uspike",16,0);
+              ("uspike",17,0);
+              ("uspike",18,0);
+              ("uspike",19,0)];
+  start_pos = (0,1);
+  exit = (19,1)
+}
+
+let level15 = {
+  l = 15;
+  obj_list = [];
+  start_pos = (0,0);
+  exit = (0,0)
+}

@@ -201,7 +201,6 @@ let update_player state =
     let lst_y = broad_phase (state.player) in
     if narrow_phase lst_y state then
       let init_yvel = p.move.v.yvel in
-      print_endline "wtf";
       p.move.loc.y  <- init_movey;
       p.move.v.yvel <- 0.;
       p.move.targetVelocity.yvel <- 0.;

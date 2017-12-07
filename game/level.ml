@@ -259,3 +259,54 @@ let level6 = {
     start_pos = (19,9);
     exit = (19,1)
   }
+
+let level9 = {
+  l = 9;
+  obj_list = [("ground",0,0);("ground",0,1);("ground",0,2);("ground",0,3);
+              ("ground",0,4);("ground",0,5);("ground",0,6);("ground",0,7);
+              ("ground",0,8);("ground",0,9);("ground",0,10);("ground",0,11);
+              ("ground",1,0);("ground",1,1);("ground",1,2);("ground",1,3);
+              ("ground",1,4);("ground",1,5);("ground",1,6);("ground",1,7);
+              ("ground",1,8);("ground",1,9);("fire",1,10);
+              ("ground",2,0);("ground",2,1);("ground",2,2);("ground",2,3);
+              ("ground",2,4);("ground",2,5);("ground",2,6);("ground",2,7);
+              ("ground",2,8);("ground",2,9);("fire",2,10);
+              ("ground",3,0);("ground",3,1);("ground",3,2);("ground",3,3);
+              ("ground",3,4);("ground",3,5);("ground",3,6);("ground",3,7);
+              ("ground",3,8);("ground",3,9);("fire",3,10);("ground",3,11);
+              ("ground",4,0);("ground",4,1);("fire",4,2);("fire",4,3);
+              ("fire",4,4);("fire",4,5);("ground",4,11);("fire",4,12);
+              ("ground",5,0);("ground",5,1);("ground",5,9);("ground",5,11);
+              ("ground",6,0);("ground",6,1);("fire",6,2);("fire",6,3);
+              ("ground",6,9);("ground",6,11);("fire",6,12);
+              ("ground",7,0);("ground",7,1);("fire",7,7);("fire",7,8);
+              ("ground",7,9);("ground",7,11);("fire",7,12);
+              ("ground",8,0);("ground",8,1);("fire",8,7);("fire",8,8);
+              ("ground",8,9);("ground",8,11);
+              ("ground",9,0);("ground",9,1);("fire",9,7);("fire",9,8);
+              ("ground",9,9);("ground",9,11);
+              ("ground",10,0);("ground",10,1);("fire",10,2);("fire",10,3);
+              ("ground",10,9);("ground",10,11);
+              ("ground",11,0);("ground",11,1);("fire",11,6);("ground",11,9);
+              ("ground",11,11);
+              ("ground",12,0);("ground",12,1);("fire",12,6);("ground",12,9);
+              ("ground",12,11);
+              ("ground",13,0);("ground",13,1);("fire",13,4);("fire",13,5);
+              ("ground",13,6);("fire",13,7);("fire",13,8);("ground",13,9);
+              ("ground",13,11);
+              ("ground",14,0);("ground",14,1);("fire",14,6);("ground",14,9);
+              ("ground",14,11);
+              ("ground",15,0);("fire",15,1);("fire",15,6);("ground",15,9);
+              ("ground",15,11);
+              ("fire",16,0);("ground",16,9);("ground",16,11);
+              ("ground",17,0);("ground",17,3);("ground",17,4);("ground",17,5);
+              ("ground",17,6);("ground",17,7);("ground",17,8);("ground",17,9);
+              ("ground",17,11);
+              ("ground",18,0);("ground",18,3);("ground",18,4);("ground",18,5);
+              ("ground",18,6);("ground",18,7);("ground",18,8);("ground",18,9);
+              ("ground",19,0);("ground",19,3);("ground",19,4);("ground",19,5);
+              ("ground",19,6);("ground",19,7);("ground",19,8);("ground",19,9);
+              ("ground",19,11);];
+  start_pos = (0,12);
+  exit = (19,1)
+}

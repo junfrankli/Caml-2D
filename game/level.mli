@@ -12,3 +12,5 @@ val level3 : level
 val level4 : level
 val level5 : level
 val level6 : level
+val level7 : level
+val level8 : level

@@ -78,7 +78,7 @@ let update_vel s =
   m.v.yvel <- m.a.yacc*.m.targetVelocity.yvel
               +. (1.0 -. m.a.yacc)*.m.v.yvel
 
-(*[get_aabb ob] takes an object [ob] and returns an axis-aligned bouding box.*)
+(*[get_aabb ob] takes an object [ob] and returns an axis-aligned bounding box.*)
 let get_aabb (ob : obj) =
   let pos_x   = ob.move.loc.x in
   let pos_y   = ob.move.loc.y in
@@ -107,10 +107,14 @@ let broad_phase player =
   let right = int_of_float (ceil ((fst box.center)+.box.width_rad)) in
   let up    = int_of_float (ceil ((snd box.center)+.box.height_rad)) in
   let down  = int_of_float (floor ((snd box.center)-.box.height_rad)) in
-  if up - down = 2 then if right - left = 2 then
-      [(left,down);(left,up-1);(right-1,down);(right-1,up-1)] else
-      [(left,down);(left,up-1)] else if right - left = 2 then
-    [(left,down);(right-1,down)]  else [(left,down)]
+  if up - down = 2 then
+    if right - left = 2 then
+      [(left,down);(left,up-1);(right-1,down);(right-1,up-1)]
+    else
+      [(left,down);(left,up-1)]
+  else if right - left = 2 then
+    [(left,down);(right-1,down)]
+  else [(left,down)]
 
 (*[killed lst state] determines if there exists a Spike tile in [lst] and
   returns [true] if there does exist one.*)
@@ -126,7 +130,7 @@ let rec killed lst state =
 let rec narrow_phase lst state =
   match lst with
   | [] -> false
-  | (k,v)::t -> if not (List.mem_assoc ((k,v)) state.tile_locs) then killed t state else
+  | (k,v)::t -> if not (List.mem_assoc ((k,v)) state.tile_locs) then narrow_phase t state else
       match List.assoc (k,v) state.tile_locs with
       | Ground -> true
       | Wall   -> true

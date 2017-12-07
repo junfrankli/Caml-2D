@@ -155,7 +155,7 @@ let rec init_level (n:int) (l:int) window vbox () =
     | 4 -> level4
     | 5 -> level5
     | _ -> level6 in
-  let st:state = init_state (lev l) in
+  let st:state = init_state (lev n) in
   (* Event Box: detect key press *)
   ignore (window#event#connect#key_press ~callback:(key_press st n l window vbox game));
   state_to_gui st.tile_locs game;

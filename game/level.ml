@@ -243,8 +243,8 @@ let level6 = {
                 ("ground",4,1);("ground",4,8);("fire",4,9);("fire",4,12);
                 ("ground",4,13);("ground",5,0);("ground",5,1);("ground",5,8);
                 ("ground",5,13);("fire",6,0);("ground",6,8);("fire",6,9);
-                ("fire",6,12);("ground",6,13);"ground",7,0);("ground",7,1);
-                ("ground",7,8);("ground",7,13);"ground",8,0);("ground",8,1);
+                ("fire",6,12);("ground",6,13);("ground",7,0);("ground",7,1);
+                ("ground",7,8);("ground",7,13);("ground",8,0);("ground",8,1);
                 ("ground",8,8);("ground",8,13);("fire",9,0);("fire",9,4);
                 ("ground",9,5);("ground",9,6);("fire",9,7);("fire",10,0);
                 ("fire",10,4);("ground",10,5);("ground",10,6);("fire",10,7);

@@ -68,6 +68,7 @@ type state = {
   lvl   : int;
   tile_locs : ((int*int)*tile) list;
   start: float * float;
+  mutable count: int
 }
 
 val init_state : level -> state

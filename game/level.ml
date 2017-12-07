@@ -1,7 +1,3 @@
-
-
-
-
 type level = {
   obj_list : (string*int*int) list;
   start_pos : int*int;

@@ -1,4 +1,4 @@
-open Command
+open Level
 
 exception NoJump of string
 
@@ -39,9 +39,10 @@ type tile =
   | Wall
 
 type obj = {
-  size  : float * float;
-  move  : movement;
-  switch: pos list;
+  size   : float * float;
+  move   : movement;
+  switch : pos list;
+  mutable isRight: bool
 }
 
 type level = {
@@ -55,7 +56,7 @@ type state = {
   input  : int;
   player : obj;
   in_air : bool;
-  level  : int;
+  lvl   : level;
   tile_locs : ((int*int)*tile) list;
 }
 
@@ -77,7 +78,7 @@ let t (_,_,k) = k
 let update_vel s =
   let m = s.player.move in
   m.v.xvel <- m.a.xacc*.m.targetVelocity.xvel
-                +. (1.0 -. m.a.xacc)*.m.v.xvel;
+              +. (1.0 -. m.a.xacc)*.m.v.xvel;
   m.v.yvel <- m.a.yacc*.m.targetVelocity.yvel
               +. (1.0 -. m.a.yacc)*.m.v.yvel
 
@@ -85,7 +86,11 @@ let update_vel s =
 let update_move s =
   let m = s.player.move in
   m.loc.x <- m.loc.x +. m.v.xvel;
-  m.loc.y <- m.loc.y +. m.v.yvel
+  m.loc.y <- m.loc.y +. m.v.yvel;
+  if m.loc.x < 0.  then m.loc.x <- 0.;
+  if m.loc.y < 0.  then m.loc.y <- 0.;
+  if m.loc.x > 20. then m.loc.x <- 20.;
+  if m.loc.y > 20. then m.loc.y <- 20.
 
 (*[get_aabb ob] takes an object [ob] and returns an axis-aligned bouding box.*)
 let get_aabb (ob : obj) =
@@ -109,7 +114,7 @@ let aabb_collision ob1 ob2 =
     let py = (box1.height_rad +. box2.height_rad -. (abs_float dy)) in
     if py <= 0.0 then false else true
 (*[broad_phase] is the list of tile indexes that the player is intersecting with.
- *)
+*)
 let broad_phase player =
   let box = get_aabb player in
   let left = floor ((fst box.center)-.box.width_rad) in
@@ -121,6 +126,8 @@ let broad_phase player =
       [(left,down);(left,up-.1.)] else if right -. left = 2. then
     [(left,down);(right-.1.,down)]  else [(left,down)]
 
+(*[killed lst state] determines if there exists a Spike tile in [lst] and
+  returns [true] if there does exist one.*)
 let rec killed lst state =
   match lst with
   | [] -> false
@@ -131,13 +138,46 @@ let rec killed lst state =
 (*[narrow_phase] checks for collisions and mutates the player movement parameters
   accordingly given [lst] of tile intersections*)
 
+let rec cast_ftoi lst =
+  match lst with
+  | [] -> []
+  | (k,v)::t -> (int_of_float k, int_of_float v) :: (cast_ftoi t)
 
+let col_x lst state =
+  true
+
+(*1 Killed -> Reset
+  check step x, if collide, reset x else dont
+  eheck step y, if collide, reset y else dont
+  update player face
+  update if jump is reset*)
 let update_player player state =
+  update_move state;
   let lst = broad_phase player in
-  if killed lst state then player.move
-
-
-
+  match state.input with
+  | 97  -> state.player.isRight <- false
+  | 100 -> state.player.isRight <- true
+  | _   -> state.player.isRight <- state.player.isRight;
+    if killed (lst |> cast_ftoi) state then
+      player.move.loc.x <- state.lvl.start_pos |> fst |> float_of_int;
+    player.move.loc.y <- state.lvl.start_pos |> snd |> float_of_int;
+    player.move.a     <- {xacc = 0.; yacc = 0.};
+    player.move.v     <- {xvel = 0.; yvel = 0.};
+    player.move.targetVelocity <- {xvel = 0.; yvel = 0.};
+    player.move.jump  <- 0;
+    (*collide in x*)
+    if col_x lst state then
+      player.move.a.xacc <- 0.;
+    player.move.v.xvel <- 0.;
+    player.move.targetVelocity.xvel <- 0.;
+    (*collide in y*)
+    if true then
+      let init_yvel = player.move.v.yvel in
+      player.move.a.yacc <- 0.;
+      player.move.v.yvel <- 0.;
+      player.move.targetVelocity.yvel <- 0.;
+      if init_yvel < 0. then
+        player.move.jump <- 2
 
 
 
@@ -167,30 +207,30 @@ let rec init_tile lst acc =
   match lst with
   | [] -> acc
   | (k,v,l)::t -> (match k with
-    | "uspike" -> init_tile t (((v,l),Spike)::acc)
-    | "dspike" -> init_tile t (((v,l),Spike)::acc)
-    | "lspike" -> init_tile t (((v,l),Spike)::acc)
-    | "rspike" -> init_tile t (((v,l),Spike)::acc)
-    | "ground" -> init_tile t (((v,l),Wall)::acc)
-    | "grass" -> init_tile t (((v,l),Ground)::acc)
-    | "uspike" -> init_tile t (((v,l),Spike)::acc)
-    | "dspike" -> init_tile t (((v,l),Spike)::acc)
-    | "lspike" -> init_tile t (((v,l),Spike)::acc)
-    | "rspike" -> init_tile t (((v,l),Spike)::acc)
+      | "uspike" -> init_tile t (((v,l),Spike)::acc)
+      | "dspike" -> init_tile t (((v,l),Spike)::acc)
+      | "lspike" -> init_tile t (((v,l),Spike)::acc)
+      | "rspike" -> init_tile t (((v,l),Spike)::acc)
+      | "ground" -> init_tile t (((v,l),Wall)::acc)
+      | "grass" -> init_tile t (((v,l),Ground)::acc)
+      | "uspike" -> init_tile t (((v,l),Spike)::acc)
+      | "dspike" -> init_tile t (((v,l),Spike)::acc)
+      | "lspike" -> init_tile t (((v,l),Spike)::acc)
+      | "rspike" -> init_tile t (((v,l),Spike)::acc)
     )
 let init_state level = {
   input     = 0;
-  player    = {size = (1.,1.);
+  player    = {size = (0.75,0.75);
                move = {
-                 loc = {x = float_of_int (fst level.start_pos) +. 0.5; y=float_of_int (snd level.start_pos) +. 0.5};
+                 loc = {x = float_of_int (fst level.start_pos) +. 0.375; y=float_of_int (snd level.start_pos) +. 0.375};
                  a   = {xacc = 0.75; yacc = 0.75};
                  v   = {xvel = 0.; yvel = 0.};
                  targetVelocity = {xvel = 0.; yvel = 0.;};
                  jump= 2
-               }; switch = []};
+               }; switch = []; isRight = true};
   in_air    = false;
-  level     = level.l;
-  tile_locs  = init_tile level.obj_list [];
+  lvl       = level;
+  tile_locs = init_tile level.obj_list [];
 }
 
 
@@ -198,9 +238,9 @@ let init_state level = {
 let update_key st k =
   {st with input = k}
 
-let update_state (st:state) (i:input) : state =
+(*let update_state (st:state) (i:input) : state =
   match i with
   | Left  -> check_collisions st.obj_locs st
   | Right -> st
   | Jump  -> st
-  | Shoot -> st
+  | Shoot -> st*)

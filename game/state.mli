@@ -71,10 +71,14 @@ type state = {
   mutable count: int
 }
 
+(*Returns an initial state based on the level that is input*)
 val init_state : level -> state
 
+(*Returns true if the player has reached the end and false otherwise*)
 val reach_end : state -> bool
 
+(*Updates the game based on the current state and user input*)
 val update_key : state -> input -> unit
 
+(*Updates the player information based on the current state*)
 val update_player : state -> unit
